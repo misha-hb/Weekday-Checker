@@ -19,7 +19,7 @@
             "sendEmail": "Boolean"
           }
         ],
-        "url": "https://your-web-server.com/execute",
+        "url": "https://weekday-checker.onrender.com/execute",
         "verb": "POST",
         "body": "",
         "header": "",
