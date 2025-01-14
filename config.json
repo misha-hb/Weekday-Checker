@@ -20,8 +20,8 @@
         ],
         "url": "https://weekday-checker.onrender.com/execute",
         "verb": "POST",
-        "body": "",
-        "header": "",
+        "body": null,
+        "header": null,
         "format": "json"
       }
     }
