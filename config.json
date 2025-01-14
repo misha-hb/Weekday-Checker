@@ -1,0 +1,30 @@
+{
+    "workflowApiVersion": "1.1",
+    "metaData": {
+      "icon": "images/icon.png",
+      "category": "message"
+    },
+    "type": "REST",
+    "lang": {
+      "en-US": {
+        "name": "Send Email on Weekday",
+        "description": "Checks if today is a weekday or weekend and decides whether to send emails."
+      }
+    },
+    "arguments": {
+      "execute": {
+        "inArguments": [],
+        "outArguments": [
+          {
+            "sendEmail": "Boolean"
+          }
+        ],
+        "url": "https://your-web-server.com/execute",
+        "verb": "POST",
+        "body": "",
+        "header": "",
+        "format": "json",
+        "useJwt": true
+      }
+    }
+  }
