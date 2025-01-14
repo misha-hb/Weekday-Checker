@@ -16,10 +16,11 @@ app.post('/execute', (req, res) => {
     const today = new Date();
     const day = today.getDay();
     const isWeekday = day >= 1 && day <= 5;
+    res.setHeader('Content-Type', 'application/json');
 
-  res.json({
-    sendEmail: isWeekday
-  });
+    res.json({
+        sendEmail: isWeekday
+    });
 });
 
 app.listen(port, () => {
