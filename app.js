@@ -11,9 +11,9 @@ app.get('/', (req, res) => {
   });
 
 app.post('/execute', (req, res) => {
-  const today = new Date();
-  const day = today.getDay();
-  const isWeekday = day >= 1 && day <= 5;
+    const today = new Date();
+    const day = today.getDay();
+    const isWeekday = day >= 1 && day <= 5;
 
   res.json({
     sendEmail: isWeekday
