@@ -2,7 +2,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const port = 443;
+const cors = require('cors');
 
+app.use(cors());
 app.use(bodyParser.json());
 
 // Define a GET route for the root URL
