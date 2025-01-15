@@ -2,10 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const port = 443;
-const cors = require('cors');
 const jwt = require('jsonwebtoken');
 
-app.use(cors());
 app.use(bodyParser.json());
 
 const SFMC_SECRET = "U84_UGVwv5yiXWxlXpd-BxIVw60AWdjbS3hXVZd_21ELc4gW2nXbeej8NgK6-8ZESzk7rqEfyuhVkjM26H_SOwiVjVXJB-dPKkr4gtuKU8KLB5K6IkDPkwAn8rV1Uy89_ujCixNKCpOJgmYtXJlUUwcvLpefaN4mRO-pUhBXz2O-ZIYqFbjHhaKqMrFMJMXMrfPp7-8dlskvncJVFMcs4uEYwbelECoMWgsX0-oV_I4VGfkNS4uQrdjgXz-BKg2";
