@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken'); // Install with `npm install jsonwebtoken`
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const JWT_SIGNING_SECRET = '02lcEu05_veHppy7_hwFC1MhU3Kc_XZNbU0UmFlORXfDLOaNNYljP3-zzAHohOBWyhnQfAJQytq2KpQSD81ABDrG9ePGagsuZpTZG29x0NWPUHSBbc1iNahR1Qzd_hA8v2LbiAMUIvnAsEH5IlHtWrGkb1dwDWUBlvcDwrFKXbw_0yimjgF4EE6jpNmFz88s8pIqQTygZHfmif4C4MaCxnWrnIC0nsDUZYKM_cm4GgKU9Tt2cHuaia4qG_0fFA2';
+const JWT_SIGNING_SECRET = 'QNW2Fd8Q104b7J3DsqK8msa5dB8EKwpS-vg8-_rz8AEEGtDgc9Uw9LXg1WBom6pv9Nqfdne4RW04EzzpVILxChiZStJWWrFrcNW-x9tU5rmKHJFKaSqvZf6jtU-2AmXBdqOLs_MhQEtmUXVDWFfHQ_1jnFKQZq37ScphfwT3KR310eoBRJBfhcuWb0BWc6P29X6QlaAcafFiI4ndEKfS6BuptdofTWL3aM4wec51sG0vgEOUutZAjDL39dCdyw2';
 
 
 app.use(bodyParser.json());
