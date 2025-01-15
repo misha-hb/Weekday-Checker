@@ -18,7 +18,29 @@
             "sendEmail": "Boolean"
           }
         ],
-        "url": "https://weekday-checker.onrender.com/execute"
+        "url": "https://weekday-checker.onrender.com/execute",
+        "useJwt": true
       }
+    },
+
+    "configurationArguments": {
+        "save": {
+            "url": "https://weekday-checker.onrender.com/save",
+            "useJwt": true
+        },
+        "publish": {
+            "url": "https://weekday-checker.onrender.com/publish",
+            "useJwt": true
+        },
+        "validate": {
+            "url": "https://weekday-checker.onrender.com/validate",
+            "useJwt": true
+        }
+    },
+    "userInterfaces": {
+    "configModal": {
+      "height": 200,
+      "width": 300
     }
   }
+}
