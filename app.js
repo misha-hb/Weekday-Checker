@@ -3,8 +3,7 @@ const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken'); // Install with `npm install jsonwebtoken`
 
 const app = express();
-const port = 443;
-
+const PORT = process.env.PORT || 3000;
 const JWT_SIGNING_SECRET = '02lcEu05_veHppy7_hwFC1MhU3Kc_XZNbU0UmFlORXfDLOaNNYljP3-zzAHohOBWyhnQfAJQytq2KpQSD81ABDrG9ePGagsuZpTZG29x0NWPUHSBbc1iNahR1Qzd_hA8v2LbiAMUIvnAsEH5IlHtWrGkb1dwDWUBlvcDwrFKXbw_0yimjgF4EE6jpNmFz88s8pIqQTygZHfmif4C4MaCxnWrnIC0nsDUZYKM_cm4GgKU9Tt2cHuaia4qG_0fFA2';
 
 
@@ -44,6 +43,6 @@ app.post('/execute', verifyJwt, (req, res) => {
     });
 });
 
-app.listen(port, () => {
-  console.log(`Custom Activity app listening on port ${port}`);
+app.listen(PORT, () => {
+  console.log(`Custom Activity app listening on port ${PORT}`);
 });
