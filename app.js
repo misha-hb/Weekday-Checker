@@ -8,22 +8,23 @@ const JWT_SIGNING_SECRET = 'QNW2Fd8Q104b7J3DsqK8msa5dB8EKwpS-vg8-_rz8AEEGtDgc9Uw
 
 
 app.use(bodyParser.json());
+app.use(require('body-parser').raw({
+  type: 'application/jwt'
+}));
 
 function verifyJwt(req, res, next) {
-    const authHeader = req.headers.authorization;
-  
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return res.status(401).json({ error: 'Unauthorized' });
-    }
-  
-    const token = authHeader.split(' ')[1];
+  if (req.headers['content-type'] === 'application/jwt') {
     try {
-      const decoded = jwt.verify(token, JWT_SIGNING_SECRET);
-      req.jwtPayload = decoded; // Attach decoded JWT payload for further use
-      next();
+        const rawJwt = req.body.toString(); // Convert Buffer to string
+        const decoded = jwt.verify(rawJwt, JWT_SIGNING_SECRET);
+        req.jwtPayload = decoded; // Attach decoded JWT payload for further use
+        next();
     } catch (err) {
-      res.status(401).json({ error: 'Invalid or expired token' });
+        return res.status(401).json({ error: 'Invalid or expired token' });
     }
+} else {
+    res.status(400).json({ error: 'Unsupported Content-Type' });
+}
   }
 
 
@@ -41,7 +42,7 @@ app.post('/execute', verifyJwt, (req, res) => {
     res.json({
         sendEmail: isWeekday
     });
-    console.log('Authorization Header:', req.headers.authorization);
+    console.log('Decoded JWT Payload:', req.jwtPayload);
 
 });
 
