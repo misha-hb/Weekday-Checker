@@ -41,6 +41,8 @@ app.post('/execute', verifyJwt, (req, res) => {
     res.json({
         sendEmail: isWeekday
     });
+    console.log('Authorization Header:', req.headers.authorization);
+
 });
 
 app.listen(PORT, () => {

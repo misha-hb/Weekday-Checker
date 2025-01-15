@@ -3,6 +3,7 @@
     "metaData": {
       "category": "message"
     },
+    "key": "eeed9b31-0981-4585-a487-f0e55b1f63a5",
     "type": "REST",
     "lang": {
       "en-US": {
@@ -18,22 +19,22 @@
             "sendEmail": "Boolean"
           }
         ],
-        "url": "https://weekday-checker.herokuapp.com/execute",
+        "url": "https://weekday-checker-7c974993cfeb.herokuapp.com/execute",
         "useJwt": true
       }
     },
 
     "configurationArguments": {
         "save": {
-            "url": "https://weekday-checker.herokuapp.com/save",
+            "url": "https://weekday-checker-7c974993cfeb.herokuapp.com/save",
             "useJwt": true
         },
         "publish": {
-            "url": "https://weekday-checker.herokuapp.com/publish",
+            "url": "https://weekday-checker-7c974993cfeb.herokuapp.com/publish",
             "useJwt": true
         },
         "validate": {
-            "url": "https://weekday-checker.herokuapp.com/validate",
+            "url": "https://weekday-checker-7c974993cfeb.herokuapp.com/validate",
             "useJwt": true
         }
     },
