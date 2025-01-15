@@ -18,11 +18,7 @@
             "sendEmail": "Boolean"
           }
         ],
-        "url": "https://weekday-checker.onrender.com/execute",
-        "verb": "POST",
-        "body": null,
-        "header": null,
-        "format": "json"
+        "url": "https://weekday-checker.onrender.com/execute"
       }
     }
   }
