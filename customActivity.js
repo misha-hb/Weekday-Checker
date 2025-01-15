@@ -1,3 +1,5 @@
+import Postmonger from 'postmonger';
+
 define(["postmonger"], function (Postmonger) {
     "use strict";
 
