@@ -39,9 +39,21 @@
         }
     },
     "userInterfaces": {
-    "configModal": {
-      "height": 200,
-      "width": 300
+        "configModal": {
+            "height": 200,
+            "width": 300
+        }
+    },
+    "schema": {
+        "arguments": {
+        "execute": {
+            "inArguments": [],
+            "outArguments": [
+                {
+                    "sendEmail": "Boolean"
+                }
+            ]
+            }
+        }
     }
-  }
 }

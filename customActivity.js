@@ -4,6 +4,7 @@ define(["postmonger"], function (Postmonger) {
     "use strict";
 
     var connection = new Postmonger.Session();
+    var authTokens = {};
     var payload = {};
     var currentStep = 'step1';
 
@@ -22,6 +23,7 @@ define(["postmonger"], function (Postmonger) {
     }
 
     function initialize(data) {
+        console.log(data);
         if (data) {
             payload = data;
         }
