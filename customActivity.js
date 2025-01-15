@@ -10,14 +10,13 @@ define(["postmonger"], function (Postmonger) {
     connection.on("initActivity", initialize);
     connection.on("requestedTokens", onGetTokens);
     connection.on("requestedEndpoints", onGetEndpoints);
-    connection.on("clickedNext", onClickedNext);
-    connection.on("clickedBack", onClickedBack);
-    connection.on("gotoStep", onGotoStep);
+
 
     function onRender() {
         connection.trigger("ready");
         connection.trigger("requestTokens");
         connection.trigger("requestEndpoints");
+        save();
     }
 
     function initialize(data) {
@@ -50,19 +49,6 @@ define(["postmonger"], function (Postmonger) {
     function onGetEndpoints(endpoints) {
         // Use endpoints if needed for additional functionality.
         // Example: endpoints.restHost
-    }
-
-    function onClickedNext() {
-        save();
-    }
-
-    function onClickedBack() {
-        connection.trigger("prevStep");
-    }
-
-    function onGotoStep(step) {
-        currentStep = step;
-        connection.trigger("ready");
     }
 
     function save() {
