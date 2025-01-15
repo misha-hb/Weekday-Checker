@@ -4,9 +4,7 @@ define(["postmonger"], function (Postmonger) {
     "use strict";
 
     var connection = new Postmonger.Session();
-    var authTokens = {};
     var payload = {};
-    var currentStep = 'step1';
 
     $(window).ready(onRender);
 
@@ -27,20 +25,7 @@ define(["postmonger"], function (Postmonger) {
         if (data) {
             payload = data;
         }
-
-        var hasInArguments = Boolean(
-            payload['arguments'] &&
-            payload['arguments'].execute &&
-            payload['arguments'].execute.inArguments &&
-            payload['arguments'].execute.inArguments.length > 0
-        );
-
-        if (!hasInArguments) {
-            payload['arguments'] = payload['arguments'] || {};
-            payload['arguments'].execute = payload['arguments'].execute || {};
-            payload['arguments'].execute.inArguments = [];
-        }
-
+        payload = data || {};
         payload['metaData'] = payload['metaData'] || {};
         payload['metaData'].isConfigured = true;
     }
@@ -57,11 +42,14 @@ define(["postmonger"], function (Postmonger) {
 
     function save() {
         // The `sendEmail` value is configured dynamically via your backend logic
-        payload['arguments'].execute.inArguments = [
-            {
-                dayCheckEndpoint: "https://weekday-checker.onrender.com/execute",
-            },
-        ];
+        payload['arguments'] = payload['arguments'] || {};
+        payload['arguments'].execute = {
+            inArguments: [
+                {
+                    dayCheckEndpoint: "https://weekday-checker-7c974993cfeb.herokuapp.com/execute",
+                },
+            ],
+        };
 
         connection.trigger("updateActivity", payload);
     }
