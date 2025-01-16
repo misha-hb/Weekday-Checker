@@ -35,7 +35,8 @@
         "validate": {
             "url": "https://weekday-checker-7c974993cfeb.herokuapp.com/validate",
             "useJwt": true
-        }
+        },
+        "applicationExtensionKey": "eeed9b31-0981-4585-a487-f0e55b1f63a5"
     },
     "userInterfaces": {
         "configModal": {
