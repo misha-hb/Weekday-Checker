@@ -1,16 +1,90 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Custom Activity</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="./js/postmonger.js"></script>
-    <script src="./customActivity.js"></script>
-  </head>
-  <body>
-    <div>
-      <h1>Send Email on Weekday</h1>
-      <p>This activity checks if the current day is a weekday or weekend.</p>
-    </div>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Schedule Emails</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      padding: 0;
+      background-color: #f4f4f9;
+    }
+    .container {
+      max-width: 400px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    .day-option {
+      margin: 10px 0;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Select Days to Send Emails</h1>
+    <form id="schedule-form">
+      <div class="day-option">
+        <label><input type="checkbox" name="days" value="Monday"> Monday</label>
+      </div>
+      <div class="day-option">
+        <label><input type="checkbox" name="days" value="Tuesday"> Tuesday</label>
+      </div>
+      <div class="day-option">
+        <label><input type="checkbox" name="days" value="Wednesday"> Wednesday</label>
+      </div>
+      <div class="day-option">
+        <label><input type="checkbox" name="days" value="Thursday"> Thursday</label>
+      </div>
+      <div class="day-option">
+        <label><input type="checkbox" name="days" value="Friday"> Friday</label>
+      </div>
+      <div class="day-option">
+        <label><input type="checkbox" name="days" value="Saturday"> Saturday</label>
+      </div>
+      <div class="day-option">
+        <label><input type="checkbox" name="days" value="Sunday"> Sunday</label>
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+    <div id="output" style="margin-top: 20px; color: green; font-weight: bold;"></div>
+  </div>
+
+  <script>
+    const form = document.getElementById('schedule-form');
+    const output = document.getElementById('output');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const selectedDays = Array.from(document.querySelectorAll('input[name="days"]:checked'))
+                                .map(checkbox => checkbox.value);
+      if (selectedDays.length > 0) {
+        output.textContent = `Emails will be sent on: ${selectedDays.join(', ')}`;
+      } else {
+        output.textContent = 'Please select at least one day.';
+      }
+    });
+  </script>
+</body>
 </html>
