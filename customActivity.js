@@ -52,7 +52,8 @@ define(["postmonger"], function (Postmonger) {
         // Example: endpoints.restHost
     }
 
-    $(document).on("submit", "#schedule-form", function () {
+    $(document).on("submit", "#schedule-form", function (e) {
+        e.preventDefault();
         save();
     });
 
