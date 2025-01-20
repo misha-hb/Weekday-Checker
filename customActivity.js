@@ -34,7 +34,7 @@ define(["postmonger"], function (Postmonger) {
         // Pre-fill checkboxes based on existing `selectedDays`
         const inArguments = payload.arguments.execute.inArguments;
         const selectedDays = (inArguments.length > 0 && inArguments[0].selectedDays) || [];
-        $("input[name='day']").each(function () {
+        $("input[name='days']").each(function () {
             const value = parseInt($(this).val());
             if (selectedDays.includes(value)) {
                 $(this).prop("checked", true);
@@ -52,7 +52,7 @@ define(["postmonger"], function (Postmonger) {
         // Example: endpoints.restHost
     }
 
-    $(document).on("submit", "#dayForm", function () {
+    $(document).on("submit", "#schedule-form", function () {
         save();
     });
 
@@ -70,7 +70,7 @@ define(["postmonger"], function (Postmonger) {
         // connection.trigger("updateActivity", payload);
 
         const selectedDays = []; // Gather checkbox values dynamically
-    $("input[name='day']:checked").each(function () {
+    $("input[name='days']:checked").each(function () {
         selectedDays.push(parseInt($(this).val()));
     });
     console.log("Selected Days:", selectedDays);
