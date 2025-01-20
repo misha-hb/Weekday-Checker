@@ -38,13 +38,29 @@ app.get('/', (req, res) => {
 app.post('/execute', verifyJwt, (req, res) => {
     const today = new Date();
     const day = today.getDay();
-    const isWeekday = day >= 1 && day <= 5;
-    res.setHeader('Content-Type', 'application/json');
+    // const isWeekday = day >= 1 && day <= 5;
+    // res.setHeader('Content-Type', 'application/json');
 
-    res.json({
-        sendEmail: isWeekday
-    });
+    // res.json({
+    //     sendEmail: isWeekday
+    // });
+    // console.log('Decoded JWT Payload:', req.jwtPayload);
+
+    const inArguments = req.jwtPayload && req.jwtPayload.inArguments;
+    if (!inArguments || !Array.isArray(inArguments) || inArguments.length === 0) {
+        return res.status(400).json({ error: 'No inArguments provided' });
+    }
+
+    const selectedDays = inArguments[0].selectedDays || [];
+    
+    // Check if today is one of the selected days
+    const sendEmail = selectedDays.includes(day);
+
+    res.setHeader('Content-Type', 'application/json');
+    res.json({ sendEmail });
     console.log('Decoded JWT Payload:', req.jwtPayload);
+    console.log('Selected Days:', selectedDays);
+    console.log('Send Email:', sendEmail);
 
 });
 

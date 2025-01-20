@@ -12,7 +12,11 @@
     },
     "arguments": {
       "execute": {
-        "inArguments": [],
+        "inArguments": [
+          {
+          "selectedDays": [0, 1, 2, 3, 4, 5, 6]
+          }
+        ],
         "outArguments": [
           {
             "sendEmail": "Boolean"
@@ -35,7 +39,12 @@
     "schema": {
         "arguments": {
           "execute": {
-            "inArguments": [],
+            "inArguments": [
+              {
+                "selectedDays": [0, 1, 2, 3, 4, 5, 6]
+              }
+
+            ],
             "outArguments": [
               {
                 "sendEmail": "Boolean"

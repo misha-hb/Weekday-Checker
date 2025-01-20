@@ -42,15 +42,28 @@ define(["postmonger"], function (Postmonger) {
 
     function save() {
         // The `sendEmail` value is configured dynamically via your backend logic
-        payload['arguments'] = payload['arguments'] || {};
-        payload['arguments'].execute = {
-            inArguments: [
-                {
-                    dayCheckEndpoint: "https://weekday-checker-7c974993cfeb.herokuapp.com/execute",
-                },
-            ],
-        };
+        // payload['arguments'] = payload['arguments'] || {};
+        // payload['arguments'].execute = {
+        //     inArguments: [
+        //         {
+        //             dayCheckEndpoint: "https://weekday-checker-7c974993cfeb.herokuapp.com/execute",
+        //         },
+        //     ],
+        // };
 
-        connection.trigger("updateActivity", payload);
+        // connection.trigger("updateActivity", payload);
+
+        const selectedDays = []; // Gather checkbox values dynamically
+    $("input[name='day']:checked").each(function () {
+        selectedDays.push(parseInt($(this).val()));
+    });
+
+    payload.arguments.execute.inArguments = [
+        {
+            selectedDays: selectedDays,
+        },
+    ];
+
+    connection.trigger("updateActivity", payload);
     }
 });

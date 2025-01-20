@@ -39,6 +39,11 @@
     button:hover {
       background-color: #0056b3;
     }
+    .message {
+      margin-top: 20px;
+      font-weight: bold;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -46,29 +51,29 @@
     <h1>Select Days to Send Emails</h1>
     <form id="schedule-form">
       <div class="day-option">
-        <label><input type="checkbox" name="days" value="Monday"> Monday</label>
+        <label><input type="checkbox" name="days" value="1"> Monday</label>
       </div>
       <div class="day-option">
-        <label><input type="checkbox" name="days" value="Tuesday"> Tuesday</label>
+        <label><input type="checkbox" name="days" value="2"> Tuesday</label>
       </div>
       <div class="day-option">
-        <label><input type="checkbox" name="days" value="Wednesday"> Wednesday</label>
+        <label><input type="checkbox" name="days" value="3"> Wednesday</label>
       </div>
       <div class="day-option">
-        <label><input type="checkbox" name="days" value="Thursday"> Thursday</label>
+        <label><input type="checkbox" name="days" value="4"> Thursday</label>
       </div>
       <div class="day-option">
-        <label><input type="checkbox" name="days" value="Friday"> Friday</label>
+        <label><input type="checkbox" name="days" value="5"> Friday</label>
       </div>
       <div class="day-option">
-        <label><input type="checkbox" name="days" value="Saturday"> Saturday</label>
+        <label><input type="checkbox" name="days" value="6"> Saturday</label>
       </div>
       <div class="day-option">
-        <label><input type="checkbox" name="days" value="Sunday"> Sunday</label>
+        <label><input type="checkbox" name="days" value="0"> Sunday</label>
       </div>
       <button type="submit">Submit</button>
     </form>
-    <div id="output" style="margin-top: 20px; color: green; font-weight: bold;"></div>
+    <div id="output" class ="message"></div>
   </div>
 
   <script>
@@ -76,11 +81,17 @@
     const output = document.getElementById('output');
 
     form.addEventListener('submit', function (e) {
-      e.preventDefault();
+      e.preventDefault(); // Prevent default form submission behavior
+      
+      // Gather selected days
       const selectedDays = Array.from(document.querySelectorAll('input[name="days"]:checked'))
-                                .map(checkbox => checkbox.value);
+                                .map(checkbox => parseInt(checkbox.value));
+      
+      // Display the result only after the button is clicked
       if (selectedDays.length > 0) {
-        output.textContent = `Emails will be sent on: ${selectedDays.join(', ')}`;
+        output.textContent = `Selected days: ${selectedDays.map(day => 
+          ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][day]
+        ).join(', ')}`;
       } else {
         output.textContent = 'Please select at least one day.';
       }
