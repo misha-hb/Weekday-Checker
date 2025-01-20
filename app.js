@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken'); // Install with `npm install jsonwebtoken`
+const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -27,10 +28,11 @@ function verifyJwt(req, res, next) {
 }
   }
 
+app.use(express.static(path.join(__dirname)));
 
 // Define a GET route for the root URL
 app.get('/', (req, res) => {
-    res.send('Welcome to the Weekday Checker API. Use POST /execute to check if today is a weekday.');
+  res.sendFile(path.join(__dirname, 'index.html'));
   });
 
 app.post('/execute', verifyJwt, (req, res) => {
