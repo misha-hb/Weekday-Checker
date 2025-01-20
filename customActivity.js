@@ -17,7 +17,6 @@ define(["postmonger"], function (Postmonger) {
         connection.trigger("ready");
         connection.trigger("requestTokens");
         connection.trigger("requestEndpoints");
-        save();
     }
 
     function initialize(data) {
@@ -25,9 +24,22 @@ define(["postmonger"], function (Postmonger) {
         if (data) {
             payload = data;
         }
-        payload = data || {};
-        payload['metaData'] = payload['metaData'] || {};
-        payload['metaData'].isConfigured = true;
+        payload.metaData = payload.metaData || {};
+        payload.metaData.isConfigured = true;
+    
+        payload.arguments = payload.arguments || {};
+        payload.arguments.execute = payload.arguments.execute || {};
+        payload.arguments.execute.inArguments = payload.arguments.execute.inArguments || [];
+    
+        // Pre-fill checkboxes based on existing `selectedDays`
+        const inArguments = payload.arguments.execute.inArguments;
+        const selectedDays = (inArguments.length > 0 && inArguments[0].selectedDays) || [];
+        $("input[name='day']").each(function () {
+            const value = parseInt($(this).val());
+            if (selectedDays.includes(value)) {
+                $(this).prop("checked", true);
+            }
+        });
     }
 
     function onGetTokens(tokens) {
@@ -39,6 +51,10 @@ define(["postmonger"], function (Postmonger) {
         // Use endpoints if needed for additional functionality.
         // Example: endpoints.restHost
     }
+
+    $(document).on("submit", "#dayForm", function () {
+        save();
+    });
 
     function save() {
         // The `sendEmail` value is configured dynamically via your backend logic
@@ -57,7 +73,7 @@ define(["postmonger"], function (Postmonger) {
     $("input[name='day']:checked").each(function () {
         selectedDays.push(parseInt($(this).val()));
     });
-
+    console.log("Selected Days:", selectedDays);
     payload.arguments.execute.inArguments = [
         {
             selectedDays: selectedDays,
@@ -65,5 +81,6 @@ define(["postmonger"], function (Postmonger) {
     ];
 
     connection.trigger("updateActivity", payload);
+    console.log("Payload Updated:", payload);
     }
 });
