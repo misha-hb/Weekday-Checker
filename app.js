@@ -21,6 +21,7 @@ function verifyJwt(req, res, next) {
         req.jwtPayload = decoded; // Attach decoded JWT payload for further use
         next();
     } catch (err) {
+        console.error('JWT verification failed:', err.message);
         return res.status(401).json({ error: 'Invalid or expired token' });
     }
 } else {
