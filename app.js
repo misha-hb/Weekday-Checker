@@ -86,6 +86,8 @@ app.post('/execute', (req, res) => {
     }
 
   const selectedDays = inArguments[0].selectedDays || [];
+  const waitTimes = inArguments[0].waitTimes || {};
+  
 
   // Check if today is one of the selected days
   const sendEmail = selectedDays.includes(day);
@@ -96,6 +98,17 @@ app.post('/execute', (req, res) => {
   console.log('Decoded JWT Payload:', req.jwtPayload);
   console.log('Selected Days:', selectedDays);
   console.log('Send Email:', sendEmail);
+});
+
+app.post('/save', (req, res) => {
+  console.log('✅ Save request received:', req.body);
+  res.json({ success: true });
+});
+
+// Publish the custom activity (called when journey is activated)
+app.post('/publish', (req, res) => {
+  console.log('✅ Publish request received:', req.body);
+  res.json({ success: true });
 });
 
 // Start the server
