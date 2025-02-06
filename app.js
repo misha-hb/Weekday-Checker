@@ -56,6 +56,10 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
+app.get('/config.json', (req, res) => {
+  res.sendFile(path.join(__dirname, 'config.json'));
+});
+
 // Debug route to list all files in the directory
 app.get('/debug-files', (req, res) => {
   fs.readdir(__dirname, (err, files) => {
