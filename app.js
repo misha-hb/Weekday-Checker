@@ -68,7 +68,7 @@ app.get('/debug-files', (req, res) => {
 });
 
 // Execute route
-app.post('/execute', verifyJwt, (req, res) => {
+app.post('/execute', (req, res) => {
   console.log('Request received at /execute:', req.body);
 
   const today = new Date();
