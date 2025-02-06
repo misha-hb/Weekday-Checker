@@ -77,10 +77,10 @@ define(["postmonger"], function (Postmonger) {
     console.log("Selected Days:", selectedDays);
     payload.arguments.execute.inArguments = [
         {
-            selectedDays: selectedDays,
+            selectedDays: selectedDays
         },
     ];
-
+    payload.metaData.isConfigured = true;
     connection.trigger("updateActivity", payload);
     console.log("Payload Updated:", payload);
     }
