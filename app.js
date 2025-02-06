@@ -78,11 +78,12 @@ app.post('/execute', (req, res) => {
   const today = new Date();
   const day = today.getDay();
 
-  const inArguments = req.jwtPayload && req.jwtPayload.inArguments;
-  if (!inArguments || !Array.isArray(inArguments) || inArguments.length === 0) {
-    console.error('No inArguments provided');
-    return res.status(400).json({ error: 'No inArguments provided' });
-  }
+  const inArguments = req.body.inArguments || [];
+
+    if (!Array.isArray(inArguments) || inArguments.length === 0) {
+        console.error('No inArguments provided');
+        return res.status(400).json({ error: 'No inArguments provided' });
+    }
 
   const selectedDays = inArguments[0].selectedDays || [];
 
