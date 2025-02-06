@@ -16,7 +16,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(cors());
 
 // Middleware to force MIME type for .js files
 app.use((req, res, next) => {
@@ -30,6 +29,7 @@ app.use(bodyParser.json());
 app.use(require('body-parser').raw({
   type: 'application/jwt'
 }));
+app.use(cors());
 
 // JWT verification middleware
 function verifyJwt(req, res, next) {
