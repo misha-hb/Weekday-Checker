@@ -59,6 +59,7 @@ app.post('/execute', verifyJwt, (req, res) => {
   if (!Array.isArray(inArguments) || inArguments.length === 0) {
     console.error('❌ No inArguments provided');
     return res.status(400).json({ error: 'No inArguments provided' });
+    inArguments = [{ selectedDays: [0, 1, 2, 3, 4, 5, 6] }];
   }
 
   const selectedDays = inArguments[0].selectedDays || [];
