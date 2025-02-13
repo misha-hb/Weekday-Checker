@@ -13,10 +13,10 @@ const JWT_SIGNING_SECRET = 'QNW2Fd8Q104b7J3DsqK8msa5dB8EKwpS-vg8-_rz8AEEGtDgc9Uw
 app.use(cors());
 
 // Serve static files correctly from `public/`
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'), {extensions: ['js', 'html']}));
 
 app.get('/customactivity.js', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/customactivity.js'));
+  res.sendFile(path.join(__dirname, 'public', 'customactivity.js'));
 });
 
 
