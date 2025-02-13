@@ -16,7 +16,7 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, 'public'), {extensions: ['js', 'html']}));
 
 app.get('/customactivity.js', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'customactivity.js'));
+  res.sendFile(path.join(__dirname, 'public', 'customActivity.js'));
 });
 
 
