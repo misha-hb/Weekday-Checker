@@ -1,4 +1,4 @@
-define(["postmonger"], function (Postmonger) {
+define(["postmonger", "jquery"], function (Postmonger, $) {
     "use strict";
 
     var connection = new Postmonger.Session();
