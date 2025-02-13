@@ -4,6 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Schedule Emails</title>
+  <script src="js/require.js"></script>
+  <script>
+      require.config({
+          baseUrl: "js",
+          paths: {
+              jquery: "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min"
+          }
+      });
+  
+      require(["jquery", "customactivity"], function ($) {
+          console.log("✅ jQuery and customactivity.js loaded successfully.");
+      });
+  </script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -97,19 +110,5 @@
       }
     });
   </script>
-  <script src="js/require.js"></script>
-<script>
-    require.config({
-        baseUrl: "js",
-        paths: {
-            jquery: "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min"
-        }
-    });
-
-    require(["jquery", "customactivity"], function ($) {
-        console.log("✅ jQuery and customactivity.js loaded successfully.");
-    });
-</script>
-
 </body>
 </html>
