@@ -11,14 +11,11 @@ define(["postmonger"], function (Postmonger) {
 
     connection.on("initActivity", initialize);
     connection.on("clickedNext", save);
-    //connection.on("requestedTokens", onGetTokens);
-    //connection.on("requestedEndpoints", onGetEndpoints);
-    //connection.on("clickedNext", save);
+
 
     function onRender() {
         connection.trigger("ready");
-        //connection.trigger("requestTokens");
-        //connection.trigger("requestEndpoints");
+
     }
 
     function initialize(data) {
@@ -31,6 +28,10 @@ define(["postmonger"], function (Postmonger) {
         payload.arguments.execute = payload.arguments.execute || {};
         payload.arguments.execute.inArguments = payload.arguments.execute.inArguments || [];
     
+        if (!Array.isArray(payload.arguments.execute.inArguments) || payload.arguments.execute.inArguments.length === 0) {
+            payload.arguments.execute.inArguments = [{ selectedDays: [] }];
+        }
+
         console.log("📥 Payload:", payload);
     
         // Extract `selectedDays` if previously saved
@@ -44,6 +45,9 @@ define(["postmonger"], function (Postmonger) {
                 $(this).prop("checked", true);
             }
         });
+
+        connection.trigger("updateActivity", payload);
+
     }
     
 
@@ -64,15 +68,7 @@ define(["postmonger"], function (Postmonger) {
     connection.trigger("updateActivity", payload);
     }
 
-    function onGetTokens(tokens) {
-        // You can use tokens if needed for additional functionality.
-        // Example: tokens.fuel2token
-    }
 
-    function onGetEndpoints(endpoints) {
-        // Use endpoints if needed for additional functionality.
-        // Example: endpoints.restHost
-    }
 });
 
 // import Postmonger from 'postmonger';
