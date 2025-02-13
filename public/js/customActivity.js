@@ -11,6 +11,7 @@ define(["postmonger"], function (Postmonger) {
     connection.on("initActivity", initialize);
     connection.on("requestedTokens", onGetTokens);
     connection.on("requestedEndpoints", onGetEndpoints);
+    connection.on("clickedNext", save);
 
     function onRender() {
         connection.trigger("ready");
@@ -24,6 +25,11 @@ define(["postmonger"], function (Postmonger) {
         }
         payload.metaData = payload.metaData || {};
         payload.metaData.isConfigured = true;
+        payload.arguments = payload.arguments || {};
+        payload.arguments.execute = payload.arguments.execute || {};
+        payload.arguments.execute.inArguments = payload.arguments.execute.inArguments || [];
+
+        console.log("📥 Payload:", payload);
     }
 
     function save() {
