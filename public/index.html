@@ -97,7 +97,18 @@
       }
     });
   </script>
-  <script src="js/postmonger.js"></script>
-  <script src="customactivity.js"></script>
+  <script src="js/require.js"></script> 
+<script>
+    require.config({
+        baseUrl: "",
+        paths: {
+            postmonger: "js/postmonger"
+        }
+    });
+
+    require(["customactivity"], function (customActivity) {
+        console.log("✅ customActivity.js loaded successfully");
+    });
+</script>
 </body>
 </html>
