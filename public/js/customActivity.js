@@ -6,6 +6,7 @@ define(["postmonger"], function (Postmonger) {
     var connection = new Postmonger.Session();
     var payload = {};
 
+    //connection with Journey Builder
     $(window).ready(onRender);
 
     connection.on("initActivity", initialize);
@@ -14,9 +15,9 @@ define(["postmonger"], function (Postmonger) {
     connection.on("clickedNext", save);
 
     function onRender() {
-        connection.trigger("ready");
-        connection.trigger("requestTokens");
-        connection.trigger("requestEndpoints");
+        //connection.trigger("ready");
+        //connection.trigger("requestTokens");
+        //connection.trigger("requestEndpoints");
     }
 
     function initialize(data) {
