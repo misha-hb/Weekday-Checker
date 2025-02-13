@@ -10,6 +10,7 @@ define(["postmonger"], function (Postmonger) {
     $(window).ready(onRender);
 
     connection.on("initActivity", initialize);
+    connection.on("clickedNext", save);
     //connection.on("requestedTokens", onGetTokens);
     //connection.on("requestedEndpoints", onGetEndpoints);
     //connection.on("clickedNext", save);
@@ -29,13 +30,38 @@ define(["postmonger"], function (Postmonger) {
         payload.arguments = payload.arguments || {};
         payload.arguments.execute = payload.arguments.execute || {};
         payload.arguments.execute.inArguments = payload.arguments.execute.inArguments || [];
-
+    
         console.log("📥 Payload:", payload);
+    
+        // Extract `selectedDays` if previously saved
+        const inArguments = payload.arguments.execute.inArguments;
+        const selectedDays = (inArguments.length > 0 && inArguments[0].selectedDays) || [];
+    
+        // Pre-fill checkboxes based on existing `selectedDays`
+        $("input[name='days']").each(function () {
+            const value = parseInt($(this).val());
+            if (selectedDays.includes(value)) {
+                $(this).prop("checked", true);
+            }
+        });
     }
+    
 
     function save() {
-        connection.trigger("updateActivity", payload);
-        console.log("✅ Payload Updated:", payload);
+        //connection.trigger("updateActivity", payload);
+        //console.log("✅ Payload Updated:", payload);
+        const selectedDays = [];
+    $("input[name='days']:checked").each(function () {
+        selectedDays.push(parseInt($(this).val()));
+    });
+
+    payload.arguments.execute.inArguments = [
+        { selectedDays: selectedDays }
+    ];
+    payload.metaData.isConfigured = true;
+
+    console.log("✅ Payload Updated:", payload);
+    connection.trigger("updateActivity", payload);
     }
 
     function onGetTokens(tokens) {
