@@ -15,6 +15,7 @@ define(["postmonger"], function (Postmonger) {
 
     function onRender() {
         connection.trigger("ready");
+        console.log("trieggered");
 
     }
 
@@ -22,6 +23,7 @@ define(["postmonger"], function (Postmonger) {
         if (data) {
             payload = data;
         }
+        console.log("data is initialized");
         payload.metaData = payload.metaData || {};
         payload.metaData.isConfigured = true;
         payload.arguments = payload.arguments || {};
