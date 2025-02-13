@@ -9,9 +9,9 @@ define(["postmonger"], function (Postmonger) {
     //connection with Journey Builder
     $(window).ready(onRender);
 
-    //connection.on("initActivity", initialize);
-    //connection.on("requestedTokens", onGetTokens);
-    //connection.on("requestedEndpoints", onGetEndpoints);
+    connection.on("initActivity", initialize);
+    connection.on("requestedTokens", onGetTokens);
+    connection.on("requestedEndpoints", onGetEndpoints);
     //connection.on("clickedNext", save);
 
     function onRender() {
@@ -36,6 +36,16 @@ define(["postmonger"], function (Postmonger) {
     function save() {
         connection.trigger("updateActivity", payload);
         console.log("✅ Payload Updated:", payload);
+    }
+
+    function onGetTokens(tokens) {
+        // You can use tokens if needed for additional functionality.
+        // Example: tokens.fuel2token
+    }
+
+    function onGetEndpoints(endpoints) {
+        // Use endpoints if needed for additional functionality.
+        // Example: endpoints.restHost
     }
 });
 
@@ -83,15 +93,6 @@ define(["postmonger"], function (Postmonger) {
 //         });
 //     }
 
-//     function onGetTokens(tokens) {
-//         // You can use tokens if needed for additional functionality.
-//         // Example: tokens.fuel2token
-//     }
-
-//     function onGetEndpoints(endpoints) {
-//         // Use endpoints if needed for additional functionality.
-//         // Example: endpoints.restHost
-//     }
 
 //     $(document).on("submit", "#schedule-form", function (e) {
 //         e.preventDefault();
