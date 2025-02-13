@@ -15,7 +15,7 @@ define(["postmonger"], function (Postmonger) {
     //connection.on("clickedNext", save);
 
     function onRender() {
-        //connection.trigger("ready");
+        connection.trigger("ready");
         //connection.trigger("requestTokens");
         //connection.trigger("requestEndpoints");
     }
