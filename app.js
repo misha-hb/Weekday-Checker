@@ -32,10 +32,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 // // Serve `config.json`
-// app.get('/config.json', (req, res) => {
-//   res.setHeader("Content-Type", "application/json");
-//     res.sendFile(path.join(__dirname, 'config.json'));
-// });
+app.get('/config.json', (req, res) => {
+  res.sendFile(path.join(__dirname, 'config.json'));
+});
 
 
 
