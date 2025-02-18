@@ -22,31 +22,22 @@ app.use(express.static(path.join(__dirname, 'public')));
 //   next();
 // })
 
-app.get('/customActivity.js', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'customActivity.js'));
-});
+// app.get('/customActivity.js', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'public', 'customActivity.js'));
+// });
 
-app.get('/js/postmonger.js', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'js', 'postmonger.js'));
-});
+// app.get('/js/postmonger.js', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'public', 'js', 'postmonger.js'));
+// });
 
 
-// Serve `config.json`
-app.get('/config.json', (req, res) => {
-  res.setHeader("Content-Type", "application/json");
-    res.sendFile(path.join(__dirname, 'config.json'));
-});
+// // Serve `config.json`
+// app.get('/config.json', (req, res) => {
+//   res.setHeader("Content-Type", "application/json");
+//     res.sendFile(path.join(__dirname, 'config.json'));
+// });
 
-// Debug: List all files in `/public`
-app.get('/debug-files', (req, res) => {
-  fs.readdir(path.join(__dirname, 'public'), (err, files) => {
-    if (err) {
-      console.error('Error reading directory:', err.message);
-      return res.status(500).send('Internal Server Error');
-    }
-    res.json(files);
-  });
-});
+
 
 // JWT verification middleware
 function verifyJwt(req, res, next) {
