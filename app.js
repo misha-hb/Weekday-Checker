@@ -15,12 +15,12 @@ app.use(cors());
 // Serve static files correctly from `public/`
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use((req, res, next) => {
-  if (req.url.endsWith('.js')) {
-    res.setHeader('Content-Type', 'application/javascript');
-  }
-  next();
-})
+// app.use((req, res, next) => {
+//   if (req.url.endsWith('.js')) {
+//     res.setHeader('Content-Type', 'application/javascript');
+//   }
+//   next();
+// })
 
 app.get('/customActivity.js', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'customActivity.js'));
