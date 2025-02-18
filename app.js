@@ -26,6 +26,10 @@ app.get('/customActivity.js', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'customActivity.js'));
 });
 
+app.get('/js/postmonger.js', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'js', 'postmonger.js'));
+});
+
 
 // Serve `config.json`
 app.get('/config.json', (req, res) => {
