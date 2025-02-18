@@ -33,6 +33,7 @@ app.get('/js/postmonger.js', (req, res) => {
 
 // Serve `config.json`
 app.get('/config.json', (req, res) => {
+  res.setHeader("Content-Type", "application/json");
     res.sendFile(path.join(__dirname, 'config.json'));
 });
 
