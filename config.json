@@ -14,12 +14,12 @@
       "execute": {
         "inArguments": [
           {
-            "selectedDays": { "dataType": "Array", "value": [0, 1, 2, 3, 4, 5, 6] }
+          "selectedDays": [0, 1, 2, 3, 4, 5, 6]
           }
         ],
         "outArguments": [
           {
-            "sendEmail": { "dataType": "Boolean" }
+            "sendEmail": "Boolean"
           }
         ],
         "url": "https://weekday-checker-7c974993cfeb.herokuapp.com/execute",
@@ -43,7 +43,6 @@
               {
                 "selectedDays": { "dataType": "Array" }
               }
-
             ],
             "outArguments": [
               {
