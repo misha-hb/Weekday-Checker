@@ -1,7 +1,7 @@
 {
     "workflowApiVersion": "1.1",
     "metaData": {
-      "category": "message"
+      "category": "flow"
     },
     "type": "REST",
     "lang": {
