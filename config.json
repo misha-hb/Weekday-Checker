@@ -6,8 +6,8 @@
     "type": "REST",
     "lang": {
       "en-US": {
-        "name": "Send Email on Weekday",
-        "description": "Checks if today is a weekday or weekend and decides whether to send emails."
+        "name": "Email Scheduler",
+        "description": "Checks what days of the week to send emails."
       }
     },
     "arguments": {
