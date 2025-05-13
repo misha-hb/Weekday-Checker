@@ -1,55 +1,55 @@
 {
-    "workflowApiVersion": "1.1",
-    "metaData": {
-      "category": "flow"
-    },
-    "type": "REST",
-    "lang": {
-      "en-US": {
-        "name": "Email Scheduler",
-        "description": "Checks what days of the week to send emails."
-      }
-    },
-    "arguments": {
-      "execute": {
-        "inArguments": [
-          {
-          "selectedDays": [0, 1, 2, 3, 4, 5, 6]
-          }
-        ],
-        "outArguments": [
-          {
-            "sendEmail": "Boolean"
-          }
-        ],
-        "url": "https://weekday-checker-7c974993cfeb.herokuapp.com/execute",
-        "useJwt": true
-      }
-    },
-
-    "configurationArguments": {
-      "applicationExtensionKey": "eeed9b31-0981-4585-a487-f0e55b1f63a5"
-    },
-    "userInterfaces": {
-        "configModal": {
-            "height": 200,
-            "width": 300
-        }
-    },
-    "schema": {
-        "arguments": {
-          "execute": {
-            "inArguments": [
-              {
-                "selectedDays": { "dataType": "Array" }
-              }
-            ],
-            "outArguments": [
-              {
-                "sendEmail": { "dataType": "Boolean" }
-              }
-            ]
-          }
-        }
+  "workflowApiVersion": "1.1",
+  "metaData": {
+    "category": "flow"
+  },
+  "type": "REST",
+  "lang": {
+    "en-US": {
+      "name": "Email Scheduler",
+      "description": "Checks what days of the week to send emails."
     }
+  },
+  "arguments": {
+    "execute": {
+      "inArguments": [
+        {
+        "selectedDays": [0, 1, 2, 3, 4, 5, 6]
+        }
+      ],
+      "outArguments": [
+        {
+          "closestDate": "Text"
+        }
+      ],
+      "url": "https://weekday-checker-7c974993cfeb.herokuapp.com/execute",
+      "useJwt": true
+    }
+  },
+
+  "configurationArguments": {
+    "applicationExtensionKey": "eeed9b31-0981-4585-a487-f0e55b1f63a5"
+  },
+  "userInterfaces": {
+      "configModal": {
+          "height": 200,
+          "width": 300
+      }
+  },
+  "schema": {
+      "arguments": {
+        "execute": {
+          "inArguments": [
+            {
+              "selectedDays": { "dataType": "Array" }
+            }
+          ],
+          "outArguments": [
+            {
+              "closestDate": { "dataType": "Text" }
+            }
+          ]
+        }
+      }
+  }
 }

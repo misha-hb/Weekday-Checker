@@ -57,10 +57,44 @@ function verifyJwt(req, res, next) {
 
 // Execute Route
 app.post('/execute', verifyJwt, (req, res) => {
+
+  function getClosestDate(selectedDays, currentDate) {
+    const currentDayOfWeek = currentDate.getDay();
+    let closestDate = new Date(currentDate);
+
+    let minDaysDifference = 7;
+    let closestDay = null;
+
+    for (const selectedDay of selectedDays) {
+      let difference = selectedDay - currentDayOfWeek;
+      if (difference < 0) {
+        difference += 7;
+      }
+
+      if (difference < minDaysDifference) {
+        minDaysDifference = difference;
+        closestDay = new Date(currentDate);
+        closestDay.setDate(currentDate.getDate() + difference);
+      }
+    }
+
+    return closestDay;
+  }
+
+  // Custom formatting function for the desired format
+  function formatDate(date) {
+    const options = { year: '2-digit', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: true };
+    const formattedDate = date.toLocaleString('en-US', options);
+
+    // Adjust format to "MMM-DD-YY 11:59 PM"
+    const [month, day, year, time, period] = formattedDate.split(/[\s,]+/);
+    const shortYear = year.slice(2);  // Take last two digits of the year
+    return `${month}-${day}-${shortYear} ${time} ${period}`;
+  }
+
   console.log('✅ Request received at /execute:', req.body);
 
   const today = new Date();
-  const day = today.getDay();
   const inArguments = req.jwtPayload?.inArguments || [];
 
   if (!Array.isArray(inArguments) || inArguments.length === 0) {
@@ -69,11 +103,21 @@ app.post('/execute', verifyJwt, (req, res) => {
   }
 
   const selectedDays = inArguments[0].selectedDays || [];
-  const sendEmail = selectedDays.includes(day);
 
-  res.json({ sendEmail });
+  const closestDate = getClosestDate(selectedDays, today);
 
-  console.log('📩 Send Email:', sendEmail);
+  // Set the time to 11:59 PM
+  closestDate.setHours(23);
+  closestDate.setMinutes(59);
+  closestDate.setSeconds(0);
+  closestDate.setMilliseconds(0);
+
+  const formattedDate = formatDate(closestDate);
+
+  res.json({ closestDate: formattedDate });
+
+
+  console.log('📩 Send Email:', closestDate);
 });
 
 // Save Route
