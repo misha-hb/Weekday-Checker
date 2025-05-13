@@ -8,6 +8,7 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const JWT_SIGNING_SECRET = 'QNW2Fd8Q104b7J3DsqK8msa5dB8EKwpS-vg8-_rz8AEEGtDgc9Uw9LXg1WBom6pv9Nqfdne4RW04EzzpVILxChiZStJWWrFrcNW-x9tU5rmKHJFKaSqvZf6jtU-2AmXBdqOLs_MhQEtmUXVDWFfHQ_1jnFKQZq37ScphfwT3KR310eoBRJBfhcuWb0BWc6P29X6QlaAcafFiI4ndEKfS6BuptdofTWL3aM4wec51sG0vgEOUutZAjDL39dCdyw2';
+{console.log("Inside the app.js")};
 
 // Enable CORS
 app.use(cors());
@@ -33,6 +34,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // // Serve `config.json`
 app.get('/config.json', (req, res) => {
+  {console.log("Inside the config.json function")};
+
   res.sendFile(path.join(__dirname, 'config.json'));
 });
 
@@ -40,6 +43,8 @@ app.get('/config.json', (req, res) => {
 
 // JWT verification middleware
 function verifyJwt(req, res, next) {
+  {console.log("Inside the verifyJwt function")};
+
   if (req.headers['content-type'] === 'application/jwt') {
     try {
       const rawJwt = req.body.toString();
@@ -57,7 +62,7 @@ function verifyJwt(req, res, next) {
 
 // Execute Route
 app.post('/execute', verifyJwt, (req, res) => {
-
+  {console.log("Inside the execute function")};
   function getClosestDate(selectedDays, currentDate) {
     const currentDayOfWeek = currentDate.getDay();
     let closestDate = new Date(currentDate);
