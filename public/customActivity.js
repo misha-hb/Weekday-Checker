@@ -108,7 +108,7 @@ define(["postmonger"], function (Postmonger) {
     
       const formattedDate = formatDate(closestDate);
     
-    payload.arguments.execute.outArguments = [
+    payload.arguments.execute.outArguments[0] = [
         { closestDate: formattedDate }
     ];
 
