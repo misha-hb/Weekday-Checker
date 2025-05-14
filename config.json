@@ -21,9 +21,8 @@
         {
           "closestDate": "Text"
         }
-      ],
-      "url": "https://weekday-checker-7c974993cfeb.herokuapp.com/execute",
-      "useJwt": true
+      ]
+      
     }
   },
 
@@ -32,8 +31,8 @@
   },
   "userInterfaces": {
       "configModal": {
-          "height": 200,
-          "width": 300
+          "height": 400,
+          "width": 500
       }
   },
   "schema": {
