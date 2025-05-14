@@ -21,7 +21,7 @@ define(["postmonger"], function (Postmonger) {
         if (data) {
             payload = data;
         }
-        console.log("data is initialized");
+        console.log("data is initialized", payload);
         payload.metaData = payload.metaData || {};
         payload.metaData.isConfigured = true;
         payload.arguments = payload.arguments || {};
@@ -59,6 +59,8 @@ define(["postmonger"], function (Postmonger) {
     });
 
     console.log("selected days are ", selectedDays);
+    payload.arguments.execute.inArguments = [{ selectedDays: selectedDays }];
+
     
     function getClosestDate(selectedDays, currentDate) {
         const currentDayOfWeek = currentDate.getDay();
