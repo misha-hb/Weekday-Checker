@@ -59,7 +59,7 @@ define(["postmonger"], function (Postmonger) {
     });
 
     console.log("selected days are ", selectedDays);
-    payload.arguments.execute.inArguments = [{ selectedDays: selectedDays }];
+    payload.arguments.execute.inArguments[0].selectedDays = selectedDays;
 
     
     function getClosestDate(selectedDays, currentDate) {
@@ -108,9 +108,7 @@ define(["postmonger"], function (Postmonger) {
     
       const formattedDate = formatDate(closestDate);
     
-    payload.arguments.execute.outArguments = [
-        { closestDate: formattedDate }
-    ];
+    payload.arguments.execute.outArguments[0].closestDate = formattedDate;
 
 
     payload.metaData.isConfigured = true;
