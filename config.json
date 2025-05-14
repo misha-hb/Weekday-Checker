@@ -12,9 +12,10 @@
   },
   "arguments": {
     "execute": {
+      "url": "",
       "inArguments": [
         {
-        "selectedDays": "Array"
+        "selectedDays": []
         }
       ],
       "outArguments": [
