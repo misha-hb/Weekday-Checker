@@ -20,7 +20,7 @@
       ],
       "outArguments": [
         {
-          "closestDate": "Text"
+          "closestDate": ""
         }
       ]
       
@@ -41,12 +41,12 @@
         "execute": {
           "inArguments": [
             {
-              "selectedDays": { "dataType": "Array", "direction": "in" }
+              "selectedDays": { "dataType": "Array"}
             }
           ],
           "outArguments": [
             {
-              "closestDate": { "dataType": "Text", "direction": "out" }
+              "closestDate": { "dataType": "Text" }
             }
           ]
         }
