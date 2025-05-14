@@ -52,7 +52,7 @@ define(["postmonger"], function (Postmonger) {
     
 
     function save() {
-        {console.log("save is executing")}
+        {console.log("save is executing here")}
         //connection.trigger("updateActivity", payload);
         //console.log("✅ Payload Updated:", payload);
         const selectedDays = [];
