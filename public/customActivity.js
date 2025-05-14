@@ -59,12 +59,63 @@ define(["postmonger"], function (Postmonger) {
     });
 
     console.log("selected days are ", selectedDays);
-    //payload.arguments.execute.outArguments = [
-        //{ selectedDays: selectedDays }
-    //];
+    
+    function getClosestDate(selectedDays, currentDate) {
+        const currentDayOfWeek = currentDate.getDay();
+        let closestDate = new Date(currentDate);
+    
+        let minDaysDifference = 7;
+        let closestDay = null;
+    
+        for (const selectedDay of selectedDays) {
+          let difference = selectedDay - currentDayOfWeek;
+          if (difference < 0) {
+            difference += 7;
+          }
+    
+          if (difference < minDaysDifference) {
+            minDaysDifference = difference;
+            closestDay = new Date(currentDate);
+            closestDay.setDate(currentDate.getDate() + difference);
+          }
+        }
+    
+        return closestDay;
+      }
+    
+      // Custom formatting function for the desired format
+      function formatDate(date) {
+        const options = { year: '2-digit', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: true };
+        const formattedDate = date.toLocaleString('en-US', options);
+    
+        // Adjust format to "MMM-DD-YY 11:59 PM"
+        const [month, day, year, time, period] = formattedDate.split(/[\s,]+/);
+        const shortYear = year.slice(2);  // Take last two digits of the year
+        return `${month}-${day}-${shortYear} ${time} ${period}`;
+      }
+        
+      const today = new Date();
+        
+      const closestDate = getClosestDate(selectedDays, today);
+    
+      // Set the time to 11:59 PM
+      closestDate.setHours(23);
+      closestDate.setMinutes(59);
+      closestDate.setSeconds(0);
+      closestDate.setMilliseconds(0);
+    
+      const formattedDate = formatDate(closestDate);
+    
+    payload.arguments.execute.outArguments = [
+        { closestDate: formattedDate }
+    ];
+
+
     payload.metaData.isConfigured = true;
 
-    console.log("✅ Payload Updated:", payload);
+    console.log("✅ closest date is: ", formattedDate);
+    console.log("updated payload is: ", payload);
+
     connection.trigger("updateActivity", payload);
     }
 
