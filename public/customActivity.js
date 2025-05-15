@@ -116,7 +116,7 @@ define(["postmonger"], function (Postmonger) {
         const options = { year: '2-digit', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: true };
         const formattedDate = date.toLocaleString('en-US', options);
         const [month, day, year, time, period] = formattedDate.split(/[\s,]+/);
-        return `${month}-${day}-${shortYear} ${time} ${period}`;
+        return `${month}-${day}-${year} ${time} ${period}`;
       }
         
       const today = new Date();
