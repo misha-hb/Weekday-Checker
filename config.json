@@ -16,6 +16,9 @@
       "inArguments": [
         {
         "selectedDays": []
+        },
+        {
+          "contactIdentifier": "{{Contact.Key}}"
         }
       ],
       "outArguments": [
