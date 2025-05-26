@@ -69,10 +69,10 @@ app.post('/execute', (req, res) => {
         closestDate.setMilliseconds(0);
         
         const formattedDate = formatDate(closestDate);
-        res.status(200).json({
-            outArguments: [{ closestDate: formattedDate }]//,
-            //metaData: { status: "OK" }
-        });
+        const response = {
+          closestDate: formattedDate
+        };
+        res.status(200).json(response);
     } catch (err) {
         console.error('Error in execute endpoint:', err);
         res.status(500).send('Error processing request');
