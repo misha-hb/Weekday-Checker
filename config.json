@@ -12,7 +12,7 @@
   },
   "arguments": {
     "execute": {
-      "url": "",
+      "url": "https://weekday-checker-7c974993cfeb.herokuapp.com/execute",
       "inArguments": [
         {
         "selectedDays": []
