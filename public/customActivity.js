@@ -80,13 +80,13 @@ define(["postmonger"], function (Postmonger) {
 
     function save() {
 
-        const selectedDays = [];
+    const selectedDays = [];
     $("input[name='days']:checked").each(function () {
         selectedDays.push(parseInt($(this).val()));
     });
 
     console.log("selected days are ", selectedDays);
-    payload.arguments.execute.inArguments[0].selectedDays = selectedDays;
+    //payload.arguments.execute.inArguments[0].selectedDays = selectedDays;
 
     
     function getClosestDate(selectedDays, currentDate) {
@@ -110,16 +110,16 @@ define(["postmonger"], function (Postmonger) {
         }
     
         return closestDay;
-      }
+    }
     
-      function formatDate(date) {
+    function formatDate(date) {
         const options = { year: '2-digit', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: true };
         const formattedDate = date.toLocaleString('en-US', options);
         const [month, day, year, time, period] = formattedDate.split(/[\s,]+/);
         return `${month}-${day}-${year} ${time} ${period}`;
-      }
+    }
         
-      const today = new Date();
+        const today = new Date();
         
       const closestDate = getClosestDate(selectedDays, today);
     
@@ -131,7 +131,9 @@ define(["postmonger"], function (Postmonger) {
     
       const formattedDate = formatDate(closestDate);
     
-    payload.arguments.execute.outArguments[0].closestDate = formattedDate;
+    
+    payload.arguments.execute.inArguments = [{"selectedDays": selectedDays}];
+    payload.arguments.execute.outArguments = [{"closestDate": formattedDate}];
 
 
     payload.metaData.isConfigured = true;
