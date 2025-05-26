@@ -73,7 +73,7 @@ app.post('/execute', (req, res) => {
         const response = {
           closestDate: formattedDate
         };
-        res.status(200).json(response);
+        return res.status(200).json(response);
     } catch (err) {
         console.error('Error in execute endpoint:', err);
         res.status(500).send('Error processing request');
