@@ -70,8 +70,8 @@ app.post('/execute', (req, res) => {
         
         const formattedDate = formatDate(closestDate);
         res.status(200).json({
-            outArguments: [{ closestDate: formattedDate }],
-            metaData: { status: "OK" }
+            outArguments: [{ closestDate: formattedDate }]//,
+            //metaData: { status: "OK" }
         });
     } catch (err) {
         console.error('Error in execute endpoint:', err);
