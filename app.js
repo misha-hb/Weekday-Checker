@@ -3,7 +3,28 @@ const app = express();
 app.use(express.json());
 
 app.use(express.static(path.join(__dirname, 'public')));
+ app.use((req, res, next) => {
+   if (req.url.endsWith('.js')) {
+     res.setHeader('Content-Type', 'application/javascript');
+   }
+   next();
+ })
 
+ app.get('/customActivity.js', (req, res) => {
+   res.sendFile(path.join(__dirname, 'public', 'customActivity.js'));
+ });
+
+ app.get('/js/postmonger.js', (req, res) => {
+   res.sendFile(path.join(__dirname, 'public', 'js', 'postmonger.js'));
+ });
+
+
+// Serve `config.json`
+app.get('/config.json', (req, res) => {
+  {console.log("Inside the config.json function")};
+
+  res.sendFile(path.join(__dirname, 'config.json'));
+});
 
 function getClosestDate(selectedDays, currentDate) {
     const currentDayOfWeek = currentDate.getDay();
