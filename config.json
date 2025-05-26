@@ -46,7 +46,7 @@
           ],
           "outArguments": [
             {
-              "closestDate": { "dataType": "Date" }
+              "closestDate": { "dataType": "Text" }
             }
           ]
         }
