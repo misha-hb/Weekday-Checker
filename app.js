@@ -69,6 +69,7 @@ app.post('/execute', (req, res) => {
         closestDate.setMilliseconds(0);
         
         const formattedDate = formatDate(closestDate);
+        console.log("fomatted date is", formattedDate);
         const response = {
           closestDate: formattedDate
         };
