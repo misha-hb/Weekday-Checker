@@ -1,4 +1,71 @@
 const express = require('express');
+const app = express();
+app.use(express.json());
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+
+function getClosestDate(selectedDays, currentDate) {
+    const currentDayOfWeek = currentDate.getDay();
+    let minDaysDifference = 7;
+    let closestDay = null;
+
+    for (const selectedDay of selectedDays) {
+        let difference = selectedDay - currentDayOfWeek;
+        if (difference < 0) difference += 7;
+
+        if (difference < minDaysDifference) {
+            minDaysDifference = difference;
+            closestDay = new Date(currentDate);
+            closestDay.setDate(currentDate.getDate() + difference);
+        }
+    }
+    return closestDay;
+}
+
+function formatDate(date) {
+  const options = { year: '2-digit', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: true };
+  const formattedDate = date.toLocaleString('en-US', options);
+  const [month, day, year, time, period] = formattedDate.split(/[\s,]+/);
+  return `${month}-${day}-${year} ${time} ${period}`;
+}
+
+app.post('/execute', (req, res) => {
+    try {
+        const inArguments = req.body.inArguments && req.body.inArguments[0];
+        const selectedDays = inArguments && inArguments.selectedDays ? inArguments.selectedDays : [];
+
+        const today = new Date();
+        const closestDate = getClosestDate(selectedDays, today);
+        
+        closestDate.setHours(23);
+        closestDate.setMinutes(59);
+        closestDate.setSeconds(0);
+        closestDate.setMilliseconds(0);
+        
+        const formattedDate = formatDate(closestDate);
+        res.status(200).json({
+            outArguments: [{ closestDate: formattedDate }],
+            metaData: { status: "OK" }
+        });
+    } catch (err) {
+        console.error('Error in execute endpoint:', err);
+        res.status(500).send('Error processing request');
+    }
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Execute endpoint running on port ${PORT}`);
+});
+
+
+
+
+
+
+
+/*const express = require('express');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken'); 
 const path = require('path');
@@ -140,4 +207,4 @@ app.post('/publish', (req, res) => {
 // Start Server
 app.listen(PORT, () => {
   console.log(`🚀 Custom Activity app listening on port ${PORT}`);
-});
+});*/
