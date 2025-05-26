@@ -16,9 +16,6 @@
       "inArguments": [
         {
         "selectedDays": []
-        },
-        {
-          "contactIdentifier": "{{Contact.Key}}"
         }
       ],
       "outArguments": [
@@ -49,7 +46,7 @@
           ],
           "outArguments": [
             {
-              "closestDate": { "dataType": "Text" }
+              "closestDate": { "dataType": "Date" }
             }
           ]
         }
