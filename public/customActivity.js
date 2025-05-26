@@ -80,122 +80,20 @@ define(["postmonger"], function (Postmonger) {
 
     function save() {
 
-    const selectedDays = [];
-    $("input[name='days']:checked").each(function () {
-        selectedDays.push(parseInt($(this).val()));
-    });
-
-    console.log("selected days are ", selectedDays);
-    //payload.arguments.execute.inArguments[0].selectedDays = selectedDays;
-
-    
-    function getClosestDate(selectedDays, currentDate) {
-        const currentDayOfWeek = currentDate.getDay();
-        let closestDate = new Date(currentDate);
-    
-        let minDaysDifference = 7;
-        let closestDay = null;
-    
-        for (const selectedDay of selectedDays) {
-          let difference = selectedDay - currentDayOfWeek;
-          if (difference < 0) {
-            difference += 7;
-          }
-    
-          if (difference < minDaysDifference) {
-            minDaysDifference = difference;
-            closestDay = new Date(currentDate);
-            closestDay.setDate(currentDate.getDate() + difference);
-          }
-        }
-    
-        return closestDay;
-    }
-    
-    function formatDate(date) {
-        const options = { year: '2-digit', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: true };
-        const formattedDate = date.toLocaleString('en-US', options);
-        const [month, day, year, time, period] = formattedDate.split(/[\s,]+/);
-        return `${month}-${day}-${year} ${time} ${period}`;
-    }
-        
-        const today = new Date();
-        
-      const closestDate = getClosestDate(selectedDays, today);
-    
-      // Set the time to 11:59 PM
-      closestDate.setHours(23);
-      closestDate.setMinutes(59);
-      closestDate.setSeconds(0);
-      closestDate.setMilliseconds(0);
-    
-      const formattedDate = formatDate(closestDate);
-    
-    
-    payload.arguments.execute.inArguments = [{"selectedDays": selectedDays}];
-    payload.arguments.execute.outArguments = [{"closestDate": formattedDate}];
-
-
-    payload.metaData.isConfigured = true;
-
-    console.log("✅ closest date is: ", formattedDate);
-
-    connection.trigger("updateActivity", payload);
-    console.log("updated payload is: ", payload);
-
-    /*getAccessToken();
-
-    // Now send the upsert request to Marketing Cloud
-    const externalKey = 'EmailScheduler';  // Replace with your data extension external key
-    const apiEndpoint = `https://mcjtfjy4vdxv2ww8bm6y0zn1rpf4.rest.marketingcloudapis.com/hub/v1/dataevents/key:${externalKey}/rowset`;  // Replace {subdomain} with your actual subdomain
-    //client secret GMIZ3FdMYaDnew4T1tCKFxf9
-    const headers = new Headers();
-    headers.append('Authorization', `Bearer ${accessToken}`);  // Replace with your access token
-    headers.append('Content-Type', 'application/json');
-
-    const body = JSON.stringify([
-        {
-            "keys": {
-                "MemberId": "38bed58c-9b97-4e95-90bf-8f39e8f539e1"
-            },
-            "values": {
-                "FirstName": "Raul",
-                "Surname": "Nieto",
-                "RewardsPoints": 23456,
-                "RewardsTier": 3,
-                "Area": "Enfield"
-            }
-        },
-        {
-            "keys": {
-                "MemberId": "54ce45e4-bd37-4284-bffe-593256ea5bd4"
-            },
-            "values": {
-                "FirstName": "Mary",
-                "Surname": "Evans",
-                "RewardsPoints": 7849,
-                "RewardsTier": 1,
-                "Area": "Islington"
-            }
-        }
-    ]);
-
-    try {
-        const response = await fetch(apiEndpoint, {
-            method: 'POST',
-            headers: headers,
-            body: body
+        const selectedDays = [];
+        $("input[name='days']:checked").each(function () {
+            selectedDays.push(parseInt($(this).val()));
         });
+    
+        // Update the payload with selected days
+        payload.arguments.execute.inArguments = [{ selectedDays: selectedDays }];
+        payload.metaData.isConfigured = true;
+    
+        console.log("Selected days to save:", selectedDays);
+    
+        connection.trigger("updateActivity", payload);
+        console.log("Updated payload:", payload);
 
-        if (response.ok) {
-            const result = await response.json();
-            console.log("Upsert successful:", result);
-        } else {
-            console.error("Error with upsert:", response.status, response.statusText);
-        }
-    } catch (error) {
-        console.error("Error sending request:", error);
-    }*/
 
     }
 
