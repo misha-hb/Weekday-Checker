@@ -70,6 +70,35 @@ app.post('/execute', (req, res) => {
         
         const formattedDate = formatDate(closestDate);
         console.log("fomatted date is", formattedDate);
+
+
+
+        const axios = require('axios');
+
+/*async function upsertDERow(accessToken, contactKey, closestDate) {
+  const deExternalKey = 'EmailScheduler'; // replace with your DE key
+
+  const url = `https://mcjtfjy4vdxv2ww8bm6y0zn1rpf4.rest.marketingcloudapis.com/hub/v1/dataevents/key:${deExternalKey}/rowset`;
+
+  const body = [{
+    keys: { ContactKey: contactKey },
+    values: { closestDate: closestDate }
+  }];
+
+  await axios.post(url, body, {
+    headers: {
+      'Authorization': `Bearer ${accessToken}`,
+      'Content-Type': 'application/json'
+    }
+  });
+}*/
+
+
+
+
+
+
+
         const response = {
           "closestDate": formattedDate
         };

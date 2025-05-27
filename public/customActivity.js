@@ -46,6 +46,8 @@ define(["postmonger"], function (Postmonger) {
                 $(this).prop("checked", true);
             }
         });
+        console.log("Contact Key loaded:", contactKey);
+
     }
     
     /*async function getAccessToken() {
