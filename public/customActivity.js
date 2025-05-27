@@ -30,7 +30,7 @@ define(["postmonger"], function (Postmonger) {
         payload.arguments.execute.inArguments = payload.arguments.execute.inArguments || [];
     
         if (!Array.isArray(payload.arguments.execute.inArguments) || payload.arguments.execute.inArguments.length === 0) {
-            payload.arguments.execute.inArguments = [{ selectedDays: [] }];
+            payload.arguments.execute.inArguments = [{ selectedDays: [], contactKey: ""  }];
         }
 
         console.log("📥 Payload:", payload);
@@ -38,6 +38,8 @@ define(["postmonger"], function (Postmonger) {
         // Extract `selectedDays` if previously saved
         const inArguments = payload.arguments.execute.inArguments;
         const selectedDays = (inArguments.length > 0 && inArguments[0].selectedDays) || [];
+        const contactKey = (inArguments.length > 0 && inArguments[1]?.contactKey) || (inArguments.length > 0 && inArguments[0].contactKey) || "";
+
     
         // Pre-fill checkboxes based on existing `selectedDays`
         $("input[name='days']").each(function () {
@@ -87,12 +89,24 @@ define(["postmonger"], function (Postmonger) {
             selectedDays.push(parseInt($(this).val()));
         });
     
-        // Update the payload with selected days
-        payload.arguments.execute.inArguments = [{ selectedDays: selectedDays }];
+        const existingInArgs = payload.arguments.execute.inArguments || [];
+        let contactKey = "";
+        if (existingInArgs.length > 0) {
+            // Try to get contactKey from second object or from first object
+            contactKey = existingInArgs[1]?.contactKey || existingInArgs[0]?.contactKey || "";
+        }
+
+        // Save selectedDays and contactKey in inArguments
+        payload.arguments.execute.inArguments = [
+            { selectedDays: selectedDays },
+            { contactKey: contactKey }
+        ];
+
         payload.metaData.isConfigured = true;
-    
+
         console.log("Selected days to save:", selectedDays);
-    
+        console.log("Contact Key saved:", contactKey);
+
         connection.trigger("updateActivity", payload);
         console.log("Updated payload:", payload);
 
