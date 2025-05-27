@@ -1,26 +1,28 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const axios = require('axios')
 
 const app = express();
 app.use(express.json());
 app.use(cors())
 
 app.use(express.static(path.join(__dirname, 'public')));
- app.use((req, res, next) => {
-   if (req.url.endsWith('.js')) {
-     res.setHeader('Content-Type', 'application/javascript');
-   }
-   next();
- })
 
- app.get('/customActivity.js', (req, res) => {
-   res.sendFile(path.join(__dirname, 'public', 'customActivity.js'));
- });
+app.use((req, res, next) => {
+  if (req.url.endsWith('.js')) {
+    res.setHeader('Content-Type', 'application/javascript');
+  }
+  next();
+})
 
- app.get('/js/postmonger.js', (req, res) => {
-   res.sendFile(path.join(__dirname, 'public', 'js', 'postmonger.js'));
- });
+app.get('/customActivity.js', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'customActivity.js'));
+});
+
+app.get('/js/postmonger.js', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'js', 'postmonger.js'));
+});
 
 
 // Serve `config.json`
@@ -55,10 +57,14 @@ function formatDate(date) {
   return `${month}-${day}-${year} ${time} ${period}`;
 }
 
-app.post('/execute', (req, res) => {
+app.post('/execute', async (req, res) => {
     try {
-        const inArguments = req.body.inArguments && req.body.inArguments[0];
-        const selectedDays = inArguments && inArguments.selectedDays ? inArguments.selectedDays : [];
+      const inArguments = req.body.inArguments || []; // This is the whole array
+      const selectedDays = (inArguments[0] && inArguments[0].selectedDays) || [];
+      const contactKey = (inArguments[1] && inArguments[1].contactKey) || (inArguments[0] && inArguments[0].contactKey) || '';
+        console.log('inArguments:', req.body.inArguments);
+console.log('selectedDays:', selectedDays);
+console.log('contactKey:', contactKey);
 
         const today = new Date();
         const closestDate = getClosestDate(selectedDays, today);
@@ -71,32 +77,28 @@ app.post('/execute', (req, res) => {
         const formattedDate = formatDate(closestDate);
         console.log("fomatted date is", formattedDate);
 
+        const tokenResponse = await axios.post('https://mcjtfjy4vdxv2ww8bm6y0zn1rpf4.auth.marketingcloudapis.com/v2/token', {
+          grant_type: 'client_credentials',
+          client_id: 'cvv69pjvucdwkhhpjqbam0gh',
+          client_secret: 'GMIZ3FdMYaDnew4T1tCKFxf9'
+        });
 
+        const accessToken = tokenResponse.data.access_token;
 
-        const axios = require('axios');
+        const deExternalKey = 'EmailScheduler'; // Replace with your Data Extension external key
+        const url = `https://mcjtfjy4vdxv2ww8bm6y0zn1rpf4.rest.marketingcloudapis.com/hub/v1/dataevents/key:${deExternalKey}/rowset`;
 
-/*async function upsertDERow(accessToken, contactKey, closestDate) {
-  const deExternalKey = 'EmailScheduler'; // replace with your DE key
-
-  const url = `https://mcjtfjy4vdxv2ww8bm6y0zn1rpf4.rest.marketingcloudapis.com/hub/v1/dataevents/key:${deExternalKey}/rowset`;
-
-  const body = [{
-    keys: { ContactKey: contactKey },
-    values: { closestDate: closestDate }
-  }];
-
-  await axios.post(url, body, {
-    headers: {
-      'Authorization': `Bearer ${accessToken}`,
-      'Content-Type': 'application/json'
-    }
-  });
-}*/
-
-
-
-
-
+        const body = [{
+          keys: { ContactKey: contactKey },
+  values: { SendDate: formattedDate }
+        }];
+    
+        await axios.post(url, body, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/json'
+          }
+        });
 
 
         const response = {
@@ -105,6 +107,10 @@ app.post('/execute', (req, res) => {
         return res.status(200).json(response);
     } catch (err) {
         console.error('Error in execute endpoint:', err);
+        if (err.response) {
+          console.error('Response status:', err.response.status);
+          console.error('Response data:', err.response.data);
+        }
         res.status(500).send('Error processing request');
     }
 });
