@@ -20,7 +20,7 @@
       ],
       "outArguments": [
         {
-          "closestDate": "hereee"
+          "closestDate": ""
         }
       ]
       
@@ -46,7 +46,7 @@
           ],
           "outArguments": [
             {
-              "closestDate": { "dataType": "Text" }
+              "closestDate": { "dataType": "Date" }
             }
           ]
         }
