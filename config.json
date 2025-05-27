@@ -45,6 +45,9 @@
           "inArguments": [
             {
               "selectedDays": { "dataType": "Array"}
+            },
+            {
+              "contactKey": {"dataType": "Text"}
             }
           ],
           "outArguments": [
