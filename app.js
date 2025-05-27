@@ -71,7 +71,7 @@ app.post('/execute', (req, res) => {
         const formattedDate = formatDate(closestDate);
         console.log("fomatted date is", formattedDate);
         const response = {
-          closestDate: formattedDate
+          closestDate: "randostring"
         };
         return res.status(200).json(response);
     } catch (err) {
