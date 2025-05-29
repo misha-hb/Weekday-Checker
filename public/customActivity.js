@@ -38,7 +38,8 @@ define(["postmonger"], function (Postmonger) {
         // Extract `selectedDays` if previously saved
         const inArguments = payload.arguments.execute.inArguments;
         const selectedDays = (inArguments.length > 0 && inArguments[0].selectedDays) || [];
-        const contactKey = (inArguments.length > 0 && inArguments[1]?.contactKey) || (inArguments.length > 0 && inArguments[0].contactKey) || "";
+        const selectedTime = (inArguments.length > 1 && inArguments[1].selectedTime) || "";
+        const contactKey = (inArguments.length > 2 && inArguments[2].contactKey) || "";
 
     
         // Pre-fill checkboxes based on existing `selectedDays`
@@ -48,6 +49,17 @@ define(["postmonger"], function (Postmonger) {
                 $(this).prop("checked", true);
             }
         });
+
+        if (selectedTime) {
+            const timeParts = selectedTime.match(/(\d{2}):(\d{2})\s?(AM|PM)/i);
+            if (timeParts) {
+                const [, hour, minute, ampm] = timeParts;
+                $('#hour').val(hour);
+                $('#minute').val(minute);
+                $('#ampm').val(ampm.toUpperCase());
+            }
+        }
+
         console.log("Contact Key loaded:", contactKey);
 
     }
@@ -89,16 +101,25 @@ define(["postmonger"], function (Postmonger) {
             selectedDays.push(parseInt($(this).val()));
         });
     
+        const hour = $('#hour').val() || "01";
+        const minute = $('#minute').val() || "00";
+        const ampm = $('#ampm').val() || "AM";
+
+        const selectedTime = `${hour}:${minute} ${ampm}`
+
+
         const existingInArgs = payload.arguments.execute.inArguments || [];
         let contactKey = "";
-        if (existingInArgs.length > 0) {
-            // Try to get contactKey from second object or from first object
-            contactKey = existingInArgs[1]?.contactKey || existingInArgs[0]?.contactKey || "";
+        if (existingInArgs.length > 2) {
+            contactKey = existingInArgs[2]?.contactKey || "";
+        } else if (existingInArgs.length > 0) {
+            contactKey = existingInArgs[0]?.contactKey || "";
         }
 
         // Save selectedDays and contactKey in inArguments
         payload.arguments.execute.inArguments = [
-            { selectedDays: selectedDays },
+             { selectedDays: selectedDays },
+            { selectedTime: selectedTime },
             { contactKey: contactKey }
         ];
 

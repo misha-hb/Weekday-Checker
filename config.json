@@ -18,6 +18,9 @@
         "selectedDays": []
         },
         {
+          "selectedTime": ""
+        },
+        {
           "contactKey": "{{Contact.Key}}"
         }
       ],
@@ -45,6 +48,9 @@
           "inArguments": [
             {
               "selectedDays": { "dataType": "Array"}
+            },
+            {
+              "selectedTime": {"dataType": "Text"}
             },
             {
               "contactKey": {"dataType": "Text"}

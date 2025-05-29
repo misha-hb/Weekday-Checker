@@ -59,11 +59,35 @@
       font-weight: bold;
       text-align: center;
     }
+    .time-select {
+      width: 30%;
+      padding: 8px;
+      margin: 5px 2%;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-color: #fff;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      text-align: center;
+    }
+    .time-label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #333;
+    }
+    .time-select-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2 style="text-align: center;">Select Days to Send Emails</h2>
+    <h2 style="text-align: center;">Email Scheduler</h2>
     <form id="schedule-form">
       <div class="day-option">
         <label><input type="checkbox" name="days" value="1"> Monday</label>
@@ -86,11 +110,47 @@
       <div class="day-option" style="margin-bottom: 20px;">
         <label><input type="checkbox" name="days" value="0"> Sunday</label>
       </div>
+      <div class="day-option" style="margin-top: 20px;">
+        <!-- <label class="time-label" for="hour">Select Time:</label> -->
+        <div class="time-select-container">
+
+          <select id="hour" class="time-select"></select>
+          <span>:</span>
+          <select id="minute" class="time-select"></select>
+          <select id="ampm" class="time-select">
+            <option value="AM">AM</option>
+            <option value="PM">PM</option>
+          </select>
+      </div>
+      <br>
       <button type="submit" id="saveButton">Submit</button>
     </form>
     <div id="output" class ="message"></div>
   </div>
+  <script>
+    const hourSelect = document.getElementById('hour');
+    const minuteSelect = document.getElementById('minute');
+  
+    for (let i = 1; i <= 12; i++) {
+      const val = i.toString();
+      const option = document.createElement('option');
+      option.value = val;
+      option.textContent = val;
+      if (val === "1") option.selected = true; // Set default hour
+      hourSelect.appendChild(option);
+    }
+  
+    for (let i = 0; i < 60; i++) {
+      const val = i.toString().padStart(2, '0');
+      const option = document.createElement('option');
+      option.value = val;
+      option.textContent = val;
+      if (val === "00") option.selected = true; // Set default minute
+        minuteSelect.appendChild(option);
+      document.getElementById("ampm").value = "PM";
 
+    }
+  </script>
   <script>
     const form = document.getElementById('schedule-form');
     const output = document.getElementById('output');
@@ -102,11 +162,15 @@
       const selectedDays = Array.from(document.querySelectorAll('input[name="days"]:checked'))
                                 .map(checkbox => parseInt(checkbox.value));
       
+                                const hour = document.getElementById('hour').value;
+                                const minute = document.getElementById('minute').value;
+                                const ampm = document.getElementById('ampm').value;
+                                const selectedTime = `${hour}:${minute} ${ampm}`;
+      
       // Display the result only after the button is clicked
-      if (selectedDays.length > 0) {
-        output.textContent = `Selected days: ${selectedDays.map(day => 
-          ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][day]
-        ).join(', ')}`;
+      if (selectedDays.length > 0 && hour && minute && ampm) {
+        output.textContent = `Send email at ${selectedDays.map(day => 
+          ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][day]).join(', ')} at ${selectedTime}`;
       } else {
         output.textContent = 'Please select at least one day.';
       }
