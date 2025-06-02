@@ -86,7 +86,7 @@ app.post('/execute', async (req, res) => {
   
       
       const selectedDays = (inArguments[0] && inArguments[0].selectedDays) || [];
-      const selectedTime = (inArguments[1] && inArguments[1].selectedTime) || "";
+      let selectedTime = (inArguments[1] && inArguments[1].selectedTime) || "";
       const contactKey = (inArguments[2] && inArguments[2].contactKey) || "";
 
       const today = new Date();
