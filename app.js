@@ -63,22 +63,9 @@ app.post('/execute', async (req, res) => {
       const {
         activityId,
         journeyId,
-        definitionInstanceId,
-        activityInstanceId,
-        journeyDefinitionId,
-        activityDefinitionId,
-        executionId,
         inArguments = [],
-        keyValue = {}
       } = req.body;
   
-      console.log("activityId:", activityId);
-      console.log("journeyId:", journeyId);
-      console.log("definitionInstanceId:", definitionInstanceId);
-      console.log("activityInstanceId:", activityInstanceId);
-      console.log("journeyDefinitionId:", journeyDefinitionId);
-      console.log("activityDefinitionId:", activityDefinitionId);
-      console.log("executionId:", executionId);
       
       const selectedDays = (inArguments[0] && inArguments[0].selectedDays) || [];
       const selectedTime = (inArguments[1] && inArguments[1].selectedTime) || "";
@@ -107,13 +94,13 @@ app.post('/execute', async (req, res) => {
       const url = `https://mcjtfjy4vdxv2ww8bm6y0zn1rpf4.rest.marketingcloudapis.com/hub/v1/dataevents/key:${deExternalKey}/rowset`;
 
       const body = [{
-        keys: { ContactKey: contactKey },
+        keys: {
+          ContactKey: contactKey,
+          journeyId: journeyId,
+          activityId: activityId
+        },
         values: {
-          SendDate: formattedDate,
-          activityId,
-          journeyId,
-          journeyDefinitionId,
-          activityDefinitionId
+          SendDate: formattedDate
         }
       }];
     
