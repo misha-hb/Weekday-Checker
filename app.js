@@ -58,7 +58,7 @@ function getClosestDate(selectedDays, currentDate, selectedTime) {
           difference += 7;
       }
 
-      if (difference < minDaysDifference) {
+      if (difference <= minDaysDifference) {
           minDaysDifference = difference;
           closestDay = new Date(currentDate);
           closestDay.setDate(currentDate.getDate() + difference);
