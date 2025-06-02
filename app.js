@@ -32,41 +32,53 @@ app.get('/config.json', (req, res) => {
   res.sendFile(path.join(__dirname, 'config.json'));
 });
 
-function getClosestDate(selectedDays, currentDate, selectedTime) {
-    const currentDayOfWeek = currentDate.getDay();
-    let minDaysDifference = 7;
-    let closestDay = null;
-    
-    const [timeString, period] = selectedTime.split(' ');
-    let [hours, minutes] = timeString.split(':').map(Number);
-    if (period.toLowerCase() === 'pm' && hours !== 12) hours += 12;
-    if (period.toLowerCase() === 'am' && hours === 12) hours = 0;
+function getClosestDate(selectedDays, selectedTime) {
+  const currentDate = new Date();
+  const currentDay = currentDate.getDay(); // 0 (Sun) to 6 (Sat)
 
-    const selectedTimeToday = new Date(currentDate);
-    selectedTimeToday.setHours(hours, minutes, 0, 0);
+  // Parse selectedTime (e.g., "6:00 PM") into a Date object set to today's date
+  const [time, modifier] = selectedTime.split(' ');
+  let [hours, minutes] = time.split(':').map(Number);
 
-    for (const selectedDay of selectedDays) {
-      let difference = selectedDay - currentDayOfWeek;
+  if (modifier === 'PM' && hours !== 12) hours += 12;
+  if (modifier === 'AM' && hours === 12) hours = 0;
 
-      // If same day
-      if (difference === 0) {
-          if (currentDate.getTime() >= selectedTimeToday.getTime()) {
-              // Time already passed today — push to next week's same day
-              difference = 7;
+  const selectedTimeToday = new Date(currentDate);
+  selectedTimeToday.setHours(hours, minutes, 0, 0); // set time to selected time
+
+  let closestDay = null;
+  let minDiff = 8; // max diff is 7 (days in week)
+
+  for (let day of selectedDays) {
+      let diff = (day - currentDay + 7) % 7;
+
+      if (diff === 0) {
+          // Today is a selected day
+          if (currentDate.getTime() < selectedTimeToday.getTime()) {
+              // selected time is in the future → use today
+              minDiff = 0;
+              closestDay = day;
+              break;
+          } else {
+              // time already passed today → skip to next week's same day
+              diff = 7;
           }
-      } else if (difference < 0) {
-          difference += 7;
       }
 
-      if (difference <= minDaysDifference) {
-          minDaysDifference = difference;
-          closestDay = new Date(currentDate);
-          closestDay.setDate(currentDate.getDate() + difference);
+      if (diff < minDiff) {
+          minDiff = diff;
+          closestDay = day;
       }
   }
 
-    return closestDay;
+  // Construct final date
+  const resultDate = new Date(currentDate);
+  resultDate.setDate(currentDate.getDate() + minDiff);
+  resultDate.setHours(hours, minutes, 0, 0); // set time
+
+  return resultDate;
 }
+
 
 function formatDate(date) {
   const options = { year: '2-digit', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: true };
@@ -89,8 +101,7 @@ app.post('/execute', async (req, res) => {
       let selectedTime = (inArguments[1] && inArguments[1].selectedTime) || "";
       const contactKey = (inArguments[2] && inArguments[2].contactKey) || "";
 
-      const today = new Date();
-      const closestDate = getClosestDate(selectedDays, today, selectedTime);
+      const closestDate = getClosestDate(selectedDays, selectedTime);
         
       if (!selectedTime) {
         selectedTime = "1:00 PM";
