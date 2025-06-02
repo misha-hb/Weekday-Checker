@@ -59,7 +59,26 @@ function formatDate(date) {
 
 app.post('/execute', async (req, res) => {
     try {
-      const inArguments = req.body.inArguments || []; // This is the whole array
+
+      const {
+        activityId,
+        journeyId,
+        definitionInstanceId,
+        activityInstanceId,
+        journeyDefinitionId,
+        activityDefinitionId,
+        executionId,
+        inArguments = [],
+        keyValue = {}
+      } = req.body;
+  
+      console.log("activityId:", activityId);
+      console.log("journeyId:", journeyId);
+      console.log("definitionInstanceId:", definitionInstanceId);
+      console.log("activityInstanceId:", activityInstanceId);
+      console.log("journeyDefinitionId:", journeyDefinitionId);
+      console.log("activityDefinitionId:", activityDefinitionId);
+      console.log("executionId:", executionId);
       
       const selectedDays = (inArguments[0] && inArguments[0].selectedDays) || [];
       const selectedTime = (inArguments[1] && inArguments[1].selectedTime) || "";
@@ -89,7 +108,13 @@ app.post('/execute', async (req, res) => {
 
       const body = [{
         keys: { ContactKey: contactKey },
-        values: { SendDate: formattedDate }
+        values: {
+          SendDate: formattedDate,
+          activityId,
+          journeyId,
+          journeyDefinitionId,
+          activityDefinitionId
+        }
       }];
     
       await axios.post(url, body, {
