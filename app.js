@@ -50,7 +50,7 @@ function getClosestDate(selectedDays, currentDate, selectedTime) {
 
       // If same day
       if (difference === 0) {
-          if (currentDate >= selectedTimeToday) {
+          if (currentDate.getTime() >= selectedTimeToday.getTime()) {
               // Time already passed today — push to next week's same day
               difference = 7;
           }
