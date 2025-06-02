@@ -32,21 +32,39 @@ app.get('/config.json', (req, res) => {
   res.sendFile(path.join(__dirname, 'config.json'));
 });
 
-function getClosestDate(selectedDays, currentDate) {
+function getClosestDate(selectedDays, currentDate, selectedTime) {
     const currentDayOfWeek = currentDate.getDay();
     let minDaysDifference = 7;
     let closestDay = null;
+    
+    const [timeString, period] = selectedTime.split(' ');
+    let [hours, minutes] = timeString.split(':').map(Number);
+    if (period.toLowerCase() === 'pm' && hours !== 12) hours += 12;
+    if (period.toLowerCase() === 'am' && hours === 12) hours = 0;
+
+    const selectedTimeToday = new Date(currentDate);
+    selectedTimeToday.setHours(hours, minutes, 0, 0);
 
     for (const selectedDay of selectedDays) {
-        let difference = selectedDay - currentDayOfWeek;
-        if (difference < 0) difference += 7;
+      let difference = selectedDay - currentDayOfWeek;
 
-        if (difference < minDaysDifference) {
-            minDaysDifference = difference;
-            closestDay = new Date(currentDate);
-            closestDay.setDate(currentDate.getDate() + difference);
-        }
-    }
+      // If same day
+      if (difference === 0) {
+          if (currentDate >= selectedTimeToday) {
+              // Time already passed today — push to next week's same day
+              difference = 7;
+          }
+      } else if (difference < 0) {
+          difference += 7;
+      }
+
+      if (difference < minDaysDifference) {
+          minDaysDifference = difference;
+          closestDay = new Date(currentDate);
+          closestDay.setDate(currentDate.getDate() + difference);
+      }
+  }
+
     return closestDay;
 }
 
@@ -72,7 +90,7 @@ app.post('/execute', async (req, res) => {
       const contactKey = (inArguments[2] && inArguments[2].contactKey) || "";
 
       const today = new Date();
-      const closestDate = getClosestDate(selectedDays, today);
+      const closestDate = getClosestDate(selectedDays, today, selectedTime);
         
       if (!selectedTime) {
         selectedTime = "1:00 PM";
