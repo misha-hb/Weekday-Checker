@@ -33,48 +33,58 @@ app.get('/config.json', (req, res) => {
 });
 
 function getClosestDate(selectedDays, selectedTime) {
-  const currentDate = new Date();
+  const currentDate = new Date(); // This gives local time
   const currentDay = currentDate.getDay(); // 0 (Sun) to 6 (Sat)
 
-  // Parse selectedTime (e.g., "6:00 PM") into a Date object set to today's date
-  const [time, modifier] = selectedTime.split(' ');
+  // Parse selectedTime (e.g., "4:00 PM") → to hours and minutes
+  const [time, modifier] = selectedTime.trim().split(' ');
   let [hours, minutes] = time.split(':').map(Number);
 
   if (modifier === 'PM' && hours !== 12) hours += 12;
   if (modifier === 'AM' && hours === 12) hours = 0;
 
-  const selectedTimeToday = new Date(currentDate);
-  selectedTimeToday.setHours(hours, minutes, 0, 0); // set time to selected time
+  // Construct the selected time today using local components
+  const selectedTimeToday = new Date(
+    currentDate.getFullYear(),
+    currentDate.getMonth(),
+    currentDate.getDate(),
+    hours,
+    minutes,
+    0,
+    0
+  );
 
   let closestDay = null;
-  let minDiff = 8; // max diff is 7 (days in week)
+  let minDiff = 8;
 
   for (let day of selectedDays) {
-      let diff = (day - currentDay + 7) % 7;
+    let diff = (day - currentDay + 7) % 7;
 
-      if (diff === 0) {
-          // Today is a selected day
-          if (currentDate.getTime() < selectedTimeToday.getTime()) {
-              // selected time is in the future → use today
-              minDiff = 0;
-              closestDay = day;
-              break;
-          } else {
-              // time already passed today → skip to next week's same day
-              diff = 7;
-          }
+    if (diff === 0) {
+      if (currentDate.getTime() < selectedTimeToday.getTime()) {
+        minDiff = 0;
+        closestDay = day;
+        break;
+      } else {
+        diff = 7; // it's too late today, go to next week
       }
+    }
 
-      if (diff < minDiff) {
-          minDiff = diff;
-          closestDay = day;
-      }
+    if (diff < minDiff) {
+      minDiff = diff;
+      closestDay = day;
+    }
   }
 
-  // Construct final date
-  const resultDate = new Date(currentDate);
-  resultDate.setDate(currentDate.getDate() + minDiff);
-  resultDate.setHours(hours, minutes, 0, 0); // set time
+  const resultDate = new Date(
+    currentDate.getFullYear(),
+    currentDate.getMonth(),
+    currentDate.getDate() + minDiff,
+    hours,
+    minutes,
+    0,
+    0
+  );
 
   return resultDate;
 }
