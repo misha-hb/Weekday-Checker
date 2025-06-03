@@ -21,6 +21,9 @@
           "selectedTime": ""
         },
         {
+          "timezone": ""
+        },
+        {
           "contactKey": "{{Contact.Key}}"
         }
       ],
@@ -51,6 +54,9 @@
             },
             {
               "selectedTime": {"dataType": "Text"}
+            },
+            {
+              "timezone": {"dataType": "Text"}
             },
             {
               "contactKey": {"dataType": "Text"}

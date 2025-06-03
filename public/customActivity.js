@@ -3,9 +3,7 @@ define(["postmonger"], function (Postmonger) {
 
     var connection = new Postmonger.Session();
     var payload = {};
-    //var accessToken = '';
-
-    //connection with Journey Builder
+ 
     $(window).ready(onRender);
 
     connection.on("initActivity", initialize);
@@ -14,7 +12,6 @@ define(["postmonger"], function (Postmonger) {
 
     function onRender() {
         connection.trigger("ready");
-        console.log("trieggered");
 
     }
 
@@ -39,7 +36,8 @@ define(["postmonger"], function (Postmonger) {
         const inArguments = payload.arguments.execute.inArguments;
         const selectedDays = (inArguments.length > 0 && inArguments[0].selectedDays) || [];
         const selectedTime = (inArguments.length > 1 && inArguments[1].selectedTime) || "";
-        const contactKey = (inArguments.length > 2 && inArguments[2].contactKey) || "";
+        const timezone = (inArguments.length > 2 && inArguments[2].timezone) || "";
+        const contactKey = (inArguments.length > 2 && inArguments[3].contactKey) || "";
 
     
         // Pre-fill checkboxes based on existing `selectedDays`
@@ -77,20 +75,22 @@ define(["postmonger"], function (Postmonger) {
         const ampm = $('#ampm').val() || "AM";
 
         const selectedTime = `${hour}:${minute} ${ampm}`
+        const timezone = $('#timezone').val() || "ET";
 
 
         const existingInArgs = payload.arguments.execute.inArguments || [];
         let contactKey = "";
-        if (existingInArgs.length > 2) {
-            contactKey = existingInArgs[2]?.contactKey || "";
-        } else if (existingInArgs.length > 0) {
-            contactKey = existingInArgs[0]?.contactKey || "";
+        if (existingInArgs.length > 3) {
+            contactKey = existingInArgs[3]?.contactKey || "";
+        } else {
+            contactKey = "";
         }
 
         // Save selectedDays and contactKey in inArguments
         payload.arguments.execute.inArguments = [
-             { selectedDays: selectedDays },
+            { selectedDays: selectedDays },
             { selectedTime: selectedTime },
+            { timezone: timezone },
             { contactKey: contactKey }
         ];
 

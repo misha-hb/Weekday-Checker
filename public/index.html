@@ -122,6 +122,19 @@
             <option value="PM">PM</option>
           </select>
       </div>
+      <div class="day-option" style="margin-top: 20px;">
+        <label class="time-label" for="timezone">Select Time Zone:</label>
+        <select id="timezone" class="time-select" style="width: 100%;">
+          <option value="America/New_York">America/New_York (Eastern Time)</option>
+          <option value="America/Chicago">America/Chicago (Central Time)</option>
+          <option value="America/Denver">America/Denver (Mountain Time)</option>
+          <option value="America/Los_Angeles">America/Los_Angeles (Pacific Time)</option>
+          <option value="America/Anchorage">America/Anchorage (Alaska Time)</option>
+          <option value="Pacific/Honolulu">Pacific/Honolulu (Hawaii Time)</option>
+          <option value="America/Halifax">America/Halifax (Atlantic Time)</option>
+          <option value="America/St_Johns">America/St_Johns (Newfoundland Time)</option>
+        </select>
+      </div>
       <br>
       <button type="submit" id="saveButton">Submit</button>
     </form>
@@ -166,11 +179,12 @@
                                 const minute = document.getElementById('minute').value;
                                 const ampm = document.getElementById('ampm').value;
                                 const selectedTime = `${hour}:${minute} ${ampm}`;
+                                const timezone = document.getElementById('timezone').value;
       
       // Display the result only after the button is clicked
       if (selectedDays.length > 0 && hour && minute && ampm) {
-        output.textContent = `Send email at ${selectedDays.map(day => 
-          ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][day]).join(', ')} at ${selectedTime}`;
+        output.textContent = `Send email on ${selectedDays.map(day => 
+          ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][day]).join(', ')} at ${selectedTime} (${timezone})`;
       } else {
         output.textContent = 'Please select at least one day.';
       }
