@@ -37,7 +37,16 @@
   },
 
   "configurationArguments": {
-    "applicationExtensionKey": "eeed9b31-0981-4585-a487-f0e55b1f63a5"
+    "applicationExtensionKey": "eeed9b31-0981-4585-a487-f0e55b1f63a5",
+    "publish": {
+      "url": "https://weekday-checker-7c974993cfeb.herokuapp.com/publish"
+    },
+    "validate": {
+      "url": "https://weekday-checker-7c974993cfeb.herokuapp.com/validate"
+    },
+    "stop": {
+      "url": "https://weekday-checker-7c974993cfeb.herokuapp.com/stop"
+    }
   },
   "userInterfaces": {
       "configModal": {
@@ -64,7 +73,7 @@
           ],
           "outArguments": [
             {
-              "closestDate": { "dataType": "Date" }
+              "closestDate": { "dataType": "Date", "direction": "out", "access": "visible" }
             }
           ]
         }
