@@ -145,6 +145,26 @@ app.post('/execute', async (req, res) => {
     }
 });
 
+app.post('/save', (req, res) => {
+  console.log('Save called');
+  res.status(200).json({});
+});
+
+app.post('/publish', (req, res) => {
+  console.log('Publish called');
+  res.status(200).json({});
+});
+
+app.post('/validate', (req, res) => {
+  console.log('Validate called');
+  res.status(200).json({});
+});
+
+app.post('/stop', (req, res) => {
+  console.log('Stop called');
+  res.status(200).json({});
+});
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
